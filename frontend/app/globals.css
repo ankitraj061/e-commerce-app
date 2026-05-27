@@ -236,6 +236,59 @@ body {
   animation: page-in 0.4s ease-out forwards;
 }
 
+/* Continuous marquee (horizontal ticker) */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+.animate-marquee {
+  display: flex;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Gradient text glow — wraps gradient-text with a soft amber halo */
+.gradient-text-glow {
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #fb923c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 24px rgba(245, 158, 11, 0.45));
+}
+
+/* White/light ghost button for dark sections */
+.btn-ghost-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s, border-color 0.2s;
+}
+.btn-ghost-dark:hover {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Dark-section backdrop card */
+.dark-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+}
+.dark-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(245, 158, 11, 0.25);
+}
+
 /* Input glow on focus */
 input:focus-visible,
 textarea:focus-visible {

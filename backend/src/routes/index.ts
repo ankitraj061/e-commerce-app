@@ -13,6 +13,7 @@ import addressRoutes from "./address.routes.js";
 import reservationRoutes from "./reservation.routes.js";
 import paymentRoutes from "./payment.routes.js";
 import orderRoutes from "./order.routes.js";
+import cronRoutes from "./cron.routes.js";
 
 const router = Router();
 
@@ -24,5 +25,7 @@ router.use("/addresses", addressRoutes);
 router.use("/reservations", reservationRoutes);
 router.use("/payments", paymentRoutes);
 router.use("/orders", orderRoutes);
+// Internal — called by Google Cloud Scheduler (protected by X-Cron-Secret header)
+router.use("/internal/cron", cronRoutes);
 
 export default router;

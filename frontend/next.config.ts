@@ -1,6 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Required for Docker / Cloud Run deployment.
+  // Outputs a self-contained bundle in .next/standalone that doesn't need
+  // the full node_modules — keeps the Docker image small.
+  output: "standalone",
+
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
@@ -11,9 +16,6 @@ const nextConfig: NextConfig = {
   },
   // Treat Razorpay checkout.js as external (CDN loaded)
   transpilePackages: [],
-  experimental: {
-    // Opt in to Next.js 16 features
-  },
 };
 
 export default nextConfig;

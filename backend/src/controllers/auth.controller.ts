@@ -3,8 +3,9 @@
  * HTTP layer for auth routes. Delegates all business logic to authService.
  *
  * Cookie strategy:
- *   The refresh token is stored in an HttpOnly, Secure, SameSite=Strict cookie.
- *   It is NEVER exposed to JavaScript — prevents XSS theft of the refresh token.
+ *   The refresh token is stored in an HttpOnly, Secure, SameSite=None cookie.
+ *   SameSite=None is required when frontend and backend are on different origins
+ *   (e.g. vercel.app frontend → render.com backend). Must be Secure=true.
  *   The access token is returned in the JSON body; client stores it in memory only.
  */
 
@@ -22,10 +23,14 @@ const REFRESH_TOKEN_MAX_AGE_MS =
 // ─── Cookie options ────────────────────────────────────────────────────────────
 
 function refreshCookieOptions() {
+  const isProduction = env.NODE_ENV === "production";
   return {
     httpOnly: true,
-    secure: env.NODE_ENV === "production",
-    sameSite: "strict" as const,
+    // SameSite=None requires Secure=true (browser enforced).
+    // In production the frontend and backend are on different origins so we
+    // need SameSite=None to allow the cookie to be sent cross-site.
+    secure: isProduction,
+    sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
     maxAge: REFRESH_TOKEN_MAX_AGE_MS,
     path: "/",
   };

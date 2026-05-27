@@ -41,6 +41,17 @@ const envSchema = z.object({
   // Razorpay (test mode)
   RAZORPAY_KEY_ID: z.string().min(1, "RAZORPAY_KEY_ID is required"),
   RAZORPAY_KEY_SECRET: z.string().min(1, "RAZORPAY_KEY_SECRET is required"),
+
+  // Cron job secret — validated by /api/internal/cron/* endpoints.
+  // Must match the X-Cron-Secret header sent by Google Cloud Scheduler.
+  CRON_SECRET: z
+    .string()
+    .min(32, "CRON_SECRET must be at least 32 characters")
+    .optional()
+    .default("dev-cron-secret-not-used-in-dev"),
+
+  // CORS — comma-separated allowed frontend origins (production only)
+  ALLOWED_ORIGINS: z.string().optional(),
 });
 
 const parsed = envSchema.safeParse(process.env);

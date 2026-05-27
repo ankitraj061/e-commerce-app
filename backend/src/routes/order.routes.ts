@@ -16,5 +16,6 @@ router.use(authMiddleware);
 
 router.get("/", asyncWrapper(orderController.list));
 router.get("/:id", asyncWrapper(orderController.getById));
+router.patch("/:id/cancel", asyncWrapper(orderController.cancel));
 
 export default router;

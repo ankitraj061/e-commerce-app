@@ -230,7 +230,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <Clock className="h-5 w-5 text-amber-500 flex-shrink-0" />
             <p className="text-sm text-amber-800">
               Stock is held for{" "}
-              <span className="font-semibold">15 minutes</span> after placing your order. Complete payment before the timer expires.
+              <span className="font-semibold">10 minutes</span> after placing your order. Complete payment before the timer expires.
             </p>
           </div>
 

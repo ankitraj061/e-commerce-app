@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { reservationService } from "@/services/reservation.service";
+import { useReleaseReservation } from "@/hooks/use-reservations";
 import { paymentService } from "@/services/payment.service";
 import { useAuthStore } from "@/store/auth.store";
 import { useReservationStore } from "@/store/reservation.store";
@@ -19,6 +20,7 @@ import { PageWrapper, fadeUp } from "@/components/layout/page-wrapper";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { CountdownTimer } from "@/components/features/countdown-timer";
 import type { RazorpayOptions, RazorpayPaymentResponse } from "@/types";
 
@@ -60,7 +62,8 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
   const { user } = useAuthStore();
   const { setActiveReservation } = useReservationStore();
   const [paymentLoading, setPaymentLoading] = useState(false);
-  const [releasing, setReleasing] = useState(false);
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
+  const { mutateAsync: releaseReservation, isPending: releasing } = useReleaseReservation();
 
   const { data: reservation, isLoading, error, refetch } = useQuery({
     queryKey: ["reservation", id],
@@ -136,17 +139,18 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
     }
   };
 
-  const handleRelease = async () => {
-    if (!window.confirm("Cancel this order? Stock will be returned immediately.")) return;
-    setReleasing(true);
+  const handleRelease = () => setShowCancelDialog(true);
+
+  const handleConfirmRelease = async () => {
     try {
-      await reservationService.release(id);
+      await releaseReservation(id);
       setActiveReservation(null);
+      setShowCancelDialog(false);
       toast.success("Order cancelled. Stock returned.");
       router.push("/products");
     } catch (err) {
       toast.error(extractErrorMessage(err));
-      setReleasing(false);
+      setShowCancelDialog(false);
     }
   };
 
@@ -182,6 +186,18 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
 
   return (
     <PageWrapper maxWidth="2xl">
+      <ConfirmDialog
+        open={showCancelDialog}
+        title="Cancel this order?"
+        description="Stock will be returned immediately. This action cannot be undone."
+        confirmLabel="Yes, cancel order"
+        cancelLabel="Keep order"
+        variant="destructive"
+        loading={releasing}
+        onConfirm={handleConfirmRelease}
+        onCancel={() => setShowCancelDialog(false)}
+      />
+
       {/* Back */}
       <motion.button
         initial={{ opacity: 0, x: -10 }}
@@ -259,7 +275,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
                   : "border-gray-100"
               }`}
             >
-              <CountdownTimer expiresAt={reservation.expiresAt} totalSeconds={900} />
+              <CountdownTimer expiresAt={reservation.expiresAt} totalSeconds={600} />
               {isExpiredOrReleased && (
                 <p className="text-sm text-gray-400 mt-2">
                   This order has {reservation.status === "RELEASED" ? "been cancelled" : "expired"}.

@@ -25,4 +25,12 @@ export const orderController = {
     if (!order) throw new ApiError(404, "Order not found.");
     sendSuccess(res, { order });
   },
+
+  async cancel(req: Request, res: Response): Promise<void> {
+    const order = await orderRepository.cancelOrder(
+      getParam(req.params.id),
+      req.user!.userId
+    );
+    sendSuccess(res, { order }, "Order cancelled successfully. Stock has been returned.");
+  },
 };

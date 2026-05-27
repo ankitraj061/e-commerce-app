@@ -11,4 +11,9 @@ export const orderService = {
     const { data } = await api.get<{ data: { order: OrderWithDetails } }>(`/orders/${id}`);
     return data.data.order;
   },
+
+  async cancel(id: string): Promise<OrderWithDetails> {
+    const { data } = await api.patch<{ data: { order: OrderWithDetails } }>(`/orders/${id}/cancel`);
+    return data.data.order;
+  },
 };

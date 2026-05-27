@@ -235,7 +235,7 @@ export default function LandingPage() {
             {[
               { step: "01", title: "Select Your Warehouse", desc: "Browse warehouses near you and choose one based on delivery speed and stock availability." },
               { step: "02", title: "Discover Products", desc: "View real-time inventory from your selected warehouse. All stock levels are live and accurate." },
-              { step: "03", title: "Reserve Instantly", desc: "Click Reserve to atomically hold your items. A countdown timer starts — you have 15 minutes." },
+              { step: "03", title: "Reserve Instantly", desc: "Click Reserve to atomically hold your items. A countdown timer starts — you have 10 minutes." },
               { step: "04", title: "Pay with Razorpay", desc: "Complete payment via UPI, cards, or net banking. Signature verification keeps everything secure." },
               { step: "05", title: "Order Confirmed", desc: "Your reservation becomes an order. Track it live from our beautiful orders dashboard." },
             ].map((item, i) => (

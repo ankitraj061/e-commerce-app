@@ -274,7 +274,7 @@ async function main() {
         description:
           "Dummy product priced at ₹1 for payment-flow and checkout testing. Do not use in production.",
         image:
-          "https://images.unsplash.com/photo-1518791841217-8f162f1912da?w=800",
+          "https://ik.imagekit.io/tvz1mupab/testproduct.jpg",
         price: 1,
       },
     }),

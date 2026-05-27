@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { reservationService } from "@/services/reservation.service";
 import type { ReservationListItem } from "@/types";
 
@@ -11,6 +11,22 @@ export function useReservations(options?: { enabled?: boolean }) {
     staleTime: 30 * 1000,
     refetchInterval: 30_000,
     enabled: options?.enabled !== false,
+  });
+}
+
+/**
+ * Releases (cancels) a reservation and immediately invalidates the cache so
+ * the payments list stops showing the "Continue to Pay" button.
+ */
+export function useReleaseReservation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => reservationService.release(id),
+    onSuccess: () => {
+      // Force an instant refetch — the list page will re-render with
+      // status=RELEASED and hide the Pay button straight away.
+      queryClient.invalidateQueries({ queryKey: RESERVATIONS_KEY });
+    },
   });
 }
 

@@ -1,18 +1,20 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import {
-  ArrowLeft, ShoppingBag, MapPin, Warehouse, CreditCard,
+  ArrowLeft, ShoppingBag, MapPin, CreditCard,
   Package2, CheckCircle2, Truck, Clock, XCircle, RotateCcw,
 } from "lucide-react";
-import { useOrder } from "@/hooks/use-orders";
+import { useOrder, useCancelOrder } from "@/hooks/use-orders";
 import { PageWrapper, staggerContainer, fadeUp } from "@/components/layout/page-wrapper";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { EmptyState } from "@/components/ui/empty-state";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { formatPrice, formatDateTime, orderStatusLabel } from "@/lib/utils";
 import type { OrderStatus } from "@/types";
 import { cn } from "@/lib/utils";
@@ -30,10 +32,27 @@ const statusConfig: Record<
 
 const timeline: OrderStatus[] = ["PLACED", "PROCESSING", "SHIPPED", "DELIVERED"];
 
+const cancellableStatuses: OrderStatus[] = ["PLACED", "PROCESSING"];
+
 export default function OrderDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
   const { data: order, isLoading, error } = useOrder(id);
+  const { mutateAsync: cancelOrder, isPending: cancelling } = useCancelOrder();
+  const [showCancelDialog, setShowCancelDialog] = useState(false);
+
+  const handleConfirmCancel = async () => {
+    try {
+      await cancelOrder(id);
+      setShowCancelDialog(false);
+      toast.success("Order cancelled. Stock has been returned.");
+    } catch (err: unknown) {
+      setShowCancelDialog(false);
+      const msg =
+        err instanceof Error ? err.message : "Failed to cancel order. Please try again.";
+      toast.error(msg);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -67,9 +86,23 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
   const cfg = statusConfig[order.status] ?? statusConfig.PLACED;
   const StatusIcon = cfg.icon;
   const currentStep = timeline.indexOf(order.status);
+  const canCancel = cancellableStatuses.includes(order.status);
 
   return (
     <PageWrapper maxWidth="2xl">
+      {/* Confirmation dialog — no browser alert() */}
+      <ConfirmDialog
+        open={showCancelDialog}
+        title="Cancel this order?"
+        description="Stock will be returned immediately. This action cannot be undone."
+        confirmLabel="Yes, cancel order"
+        cancelLabel="Keep order"
+        variant="destructive"
+        loading={cancelling}
+        onConfirm={handleConfirmCancel}
+        onCancel={() => setShowCancelDialog(false)}
+      />
+
       {/* Back */}
       <motion.button
         initial={{ opacity: 0, x: -10 }}
@@ -279,13 +312,26 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
         </motion.div>
 
         {/* Actions */}
-        <motion.div variants={fadeUp} className="flex gap-3 pt-2">
+        <motion.div variants={fadeUp} className="flex flex-wrap gap-3 pt-2">
           <Button variant="outline" onClick={() => router.push("/orders")} leftIcon={<ArrowLeft className="h-4 w-4" />}>
             All Orders
           </Button>
           <Button asChild leftIcon={<Package2 className="h-4 w-4" />}>
             <a href="/products">Browse Products</a>
           </Button>
+
+          {/* Cancel — only for PLACED / PROCESSING */}
+          {canCancel && (
+            <Button
+              variant="outline"
+              className="ml-auto border-red-200 text-red-500 hover:bg-red-50 hover:border-red-400 hover:text-red-600"
+              leftIcon={<XCircle className="h-4 w-4" />}
+              onClick={() => setShowCancelDialog(true)}
+              disabled={cancelling}
+            >
+              Cancel Order
+            </Button>
+          )}
         </motion.div>
       </motion.div>
     </PageWrapper>

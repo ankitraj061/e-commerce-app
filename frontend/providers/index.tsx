@@ -12,16 +12,21 @@ export function Providers({ children }: { children: ReactNode }) {
         {children}
         <Toaster
           position="top-right"
+          theme="light"
+          richColors
+          gap={8}
           toastOptions={{
             style: {
-              background: "rgba(15, 15, 19, 0.95)",
-              border: "1px solid rgba(255,255,255,0.1)",
-              color: "#fafafa",
-              backdropFilter: "blur(16px)",
+              background: "#ffffff",
+              border: "1px solid rgba(0,0,0,0.07)",
+              color: "#111827",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04)",
+              borderRadius: "14px",
+              fontSize: "0.875rem",
+              fontFamily: "inherit",
+              padding: "14px 16px",
             },
-            className: "glass",
           }}
-          richColors
         />
       </AuthProvider>
     </QueryProvider>

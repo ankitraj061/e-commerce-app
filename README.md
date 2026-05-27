@@ -8,19 +8,33 @@ BharatBazaar lets customers browse products scoped to a physical warehouse, rese
 
 ## Table of Contents
 
-1. [Project Overview](#project-overview)
-2. [Repository Layout](#repository-layout)
-3. [Tech Stack](#tech-stack)
-4. [Architecture Overview](#architecture-overview)
-5. [Local Setup](#local-setup)
+1. [Demo Credentials](#demo-credentials)
+2. [Project Overview](#project-overview)
+3. [Repository Layout](#repository-layout)
+4. [Tech Stack](#tech-stack)
+5. [Architecture Overview](#architecture-overview)
+6. [Local Setup](#local-setup)
    - [Backend](#backend-setup)
    - [Frontend](#frontend-setup)
-6. [Docker (Backend)](#docker-backend)
-7. [Environment Variables](#environment-variables)
-8. [Key Features](#key-features)
-9. [API Summary](#api-summary)
-10. [User Flow](#user-flow)
-11. [Project Docs](#project-docs)
+7. [Docker (Backend)](#docker-backend)
+8. [Environment Variables](#environment-variables)
+9. [Key Features](#key-features)
+10. [API Summary](#api-summary)
+11. [User Flow](#user-flow)
+12. [Project Docs](#project-docs)
+
+---
+
+## Demo Credentials
+
+> Pre-seeded account for assignment reviewers — no registration required.
+
+| Field    | Value            |
+|----------|------------------|
+| Email    | `demo@allo.dev`  |
+| Password | `Demo@1234`      |
+
+The demo account is created automatically when you run `npx tsx prisma/seed.ts` (step 5 of [Backend Setup](#backend-setup)).
 
 ---
 

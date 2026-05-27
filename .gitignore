@@ -1,0 +1,36 @@
+# Node dependencies
+/node_modules
+/backend/node_modules
+/frontend/node_modules
+
+# Build output
+/backend/dist
+/frontend/.next
+/frontend/out
+/frontend/build
+/frontend/.vercel
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE/editor directories
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# CLI/other generated files
+*.pem
+*.log
+
+# Local Claude config / caches
+.claude/
+

@@ -1,0 +1,232 @@
+/**
+ * seed.ts
+ * Populates the database with realistic demo data for evaluation.
+ *
+ * Run:  npx tsx prisma/seed.ts
+ *
+ * Creates:
+ *   - 3 Warehouses (Mumbai, Delhi, Bangalore)
+ *   - 6 Products (electronics + apparel)
+ *   - Inventory entries (each product in at least 2 warehouses)
+ *   - 1 demo user (email: demo@allo.dev / password: Demo@1234)
+ *   - 1 demo address linked to that user
+ */
+
+import { PrismaClient } from "@prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import pg from "pg";
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
+
+async function main() {
+  console.log("🌱 Starting database seed...\n");
+
+  // ── Clean slate ──────────────────────────────────────────────────────────────
+  console.log("  Clearing existing seed data...");
+  await prisma.orderItem.deleteMany();
+  await prisma.order.deleteMany();
+  await prisma.payment.deleteMany();
+  await prisma.reservation.deleteMany();
+  await prisma.inventory.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.warehouse.deleteMany();
+  await prisma.refreshToken.deleteMany();
+  await prisma.address.deleteMany();
+  await prisma.user.deleteMany();
+  console.log("  ✓ Cleared\n");
+
+  // ── Warehouses ───────────────────────────────────────────────────────────────
+  console.log("  Creating warehouses...");
+  const [mumbai, delhi, bangalore] = await Promise.all([
+    prisma.warehouse.create({
+      data: {
+        name: "Mumbai Hub",
+        city: "Mumbai",
+        state: "Maharashtra",
+        pincode: "400001",
+        country: "India",
+        image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800",
+      },
+    }),
+    prisma.warehouse.create({
+      data: {
+        name: "Delhi Central",
+        city: "New Delhi",
+        state: "Delhi",
+        pincode: "110001",
+        country: "India",
+        image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=800",
+      },
+    }),
+    prisma.warehouse.create({
+      data: {
+        name: "Bangalore Tech Park",
+        city: "Bangalore",
+        state: "Karnataka",
+        pincode: "560001",
+        country: "India",
+        image: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=800",
+      },
+    }),
+  ]);
+  console.log(`  ✓ 3 warehouses created\n`);
+
+  // ── Products ─────────────────────────────────────────────────────────────────
+  console.log("  Creating products...");
+  const [airpods, macbook, iphone, tShirt, sneakers, headphones] =
+    await Promise.all([
+      prisma.product.create({
+        data: {
+          name: "AirPods Pro (2nd Gen)",
+          description:
+            "Active Noise Cancellation, Adaptive Audio, USB-C charging case.",
+          image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=800",
+          price: 24900,
+        },
+      }),
+      prisma.product.create({
+        data: {
+          name: 'MacBook Air 13" M3',
+          description:
+            "Apple M3 chip, 8GB RAM, 256GB SSD, 18-hour battery life.",
+          image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mba13-midnight-config-202402?wid=800",
+          price: 114900,
+        },
+      }),
+      prisma.product.create({
+        data: {
+          name: "iPhone 16 Pro",
+          description: "A18 Pro chip, 48MP camera system, titanium design.",
+          image: "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-16-pro-model-unselect-gallery-1-202409?wid=800",
+          price: 119900,
+        },
+      }),
+      prisma.product.create({
+        data: {
+          name: "Premium Cotton T-Shirt",
+          description: "100% organic cotton, pre-shrunk, available in 6 colours.",
+          image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800",
+          price: 1299,
+        },
+      }),
+      prisma.product.create({
+        data: {
+          name: "Allbirds Tree Runners",
+          description: "Lightweight eucalyptus tree fibre. Carbon-neutral.",
+          image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800",
+          price: 12999,
+        },
+      }),
+      prisma.product.create({
+        data: {
+          name: "Sony WH-1000XM5",
+          description:
+            "Industry-leading noise cancellation, 30-hour battery, multipoint.",
+          image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800",
+          price: 26990,
+        },
+      }),
+    ]);
+  console.log(`  ✓ 6 products created\n`);
+
+  // ── Inventory ─────────────────────────────────────────────────────────────────
+  // Deliberately set some to LOW stock (1-3 units) to make race conditions easy to demo
+  console.log("  Creating inventory...");
+  await prisma.inventory.createMany({
+    data: [
+      // AirPods — LOW STOCK in Mumbai (perfect for race-condition demo)
+      { productId: airpods.id, warehouseId: mumbai.id, totalStock: 2, reservedStock: 0 },
+      { productId: airpods.id, warehouseId: delhi.id, totalStock: 50, reservedStock: 3 },
+      { productId: airpods.id, warehouseId: bangalore.id, totalStock: 30, reservedStock: 0 },
+
+      // MacBook — scarce everywhere
+      { productId: macbook.id, warehouseId: mumbai.id, totalStock: 5, reservedStock: 0 },
+      { productId: macbook.id, warehouseId: delhi.id, totalStock: 3, reservedStock: 0 },
+      { productId: macbook.id, warehouseId: bangalore.id, totalStock: 8, reservedStock: 1 },
+
+      // iPhone
+      { productId: iphone.id, warehouseId: mumbai.id, totalStock: 20, reservedStock: 2 },
+      { productId: iphone.id, warehouseId: delhi.id, totalStock: 15, reservedStock: 0 },
+
+      // T-Shirt — plenty everywhere
+      { productId: tShirt.id, warehouseId: mumbai.id, totalStock: 200, reservedStock: 5 },
+      { productId: tShirt.id, warehouseId: delhi.id, totalStock: 150, reservedStock: 0 },
+      { productId: tShirt.id, warehouseId: bangalore.id, totalStock: 175, reservedStock: 10 },
+
+      // Sneakers
+      { productId: sneakers.id, warehouseId: mumbai.id, totalStock: 40, reservedStock: 0 },
+      { productId: sneakers.id, warehouseId: bangalore.id, totalStock: 25, reservedStock: 2 },
+
+      // Headphones — exactly 1 left in Mumbai (perfect for 409 demo!)
+      { productId: headphones.id, warehouseId: mumbai.id, totalStock: 1, reservedStock: 0 },
+      { productId: headphones.id, warehouseId: delhi.id, totalStock: 12, reservedStock: 0 },
+      { productId: headphones.id, warehouseId: bangalore.id, totalStock: 8, reservedStock: 0 },
+    ],
+  });
+  console.log(`  ✓ 16 inventory records created\n`);
+
+  // ── Demo user ─────────────────────────────────────────────────────────────────
+  console.log("  Creating demo user...");
+  const hashedPassword = await bcrypt.hash("Demo@1234", 12);
+  const demoUser = await prisma.user.create({
+    data: {
+      name: "Allo Demo User",
+      email: "demo@allo.health",
+      password: hashedPassword,
+      selectedWarehouseId: mumbai.id, // pre-selects Mumbai warehouse
+    },
+  });
+
+  // Demo delivery address
+  await prisma.address.create({
+    data: {
+      userId: demoUser.id,
+      fullName: "Allo Demo User",
+      phone: "9876543210",
+      street: "123 Demo Street, Andheri West",
+      city: "Mumbai",
+      state: "Maharashtra",
+      pincode: "400053",
+      country: "India",
+      isDefault: true,
+    },
+  });
+  console.log(`  ✓ Demo user created (demo@allo.dev / Demo@1234)\n`);
+
+  // ── Summary ───────────────────────────────────────────────────────────────────
+  console.log("✅ Seed complete!\n");
+  console.log("─────────────────────────────────────────────────────────");
+  console.log("  Demo credentials");
+  console.log("    Email    : demo@allo.dev");
+  console.log("    Password : Demo@1234");
+  console.log("");
+  console.log("  Warehouses");
+  console.log(`    Mumbai Hub         (id: ${mumbai.id})`);
+  console.log(`    Delhi Central      (id: ${delhi.id})`);
+  console.log(`    Bangalore Tech Park(id: ${bangalore.id})`);
+  console.log("");
+  console.log("  Race-condition demo products");
+  console.log(`    Sony WH-1000XM5 @ Mumbai  → only 1 unit left!`);
+  console.log(`    AirPods Pro      @ Mumbai  → only 2 units left!`);
+  console.log("─────────────────────────────────────────────────────────");
+}
+
+main()
+  .catch((e) => {
+    console.error("❌ Seed failed:", e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+    await pool.end();
+  });

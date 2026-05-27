@@ -71,8 +71,7 @@ export interface ButtonProps
   loading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  /** Merge props onto the immediate child element instead of rendering a <button> */
-  asChild?: boolean;
+    asChild?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -93,7 +92,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const classes = cn(buttonVariants({ variant, size, className }));
 
-    // When asChild, wrap with Slot (merges props onto child link/element)
+    
     if (asChild) {
       return (
         <Slot ref={ref} className={classes} {...props}>

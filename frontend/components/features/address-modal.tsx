@@ -56,7 +56,7 @@ export function AddressModal({ open, onClose, onSuccess }: AddressModalProps) {
     <AnimatePresence>
       {open && (
         <>
-          {/* Backdrop */}
+          {}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -65,7 +65,7 @@ export function AddressModal({ open, onClose, onSuccess }: AddressModalProps) {
             className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
           />
 
-          {/* Modal */}
+          {}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -73,7 +73,7 @@ export function AddressModal({ open, onClose, onSuccess }: AddressModalProps) {
             transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
             className="fixed inset-x-4 top-1/2 z-50 -translate-y-1/2 mx-auto max-w-lg bg-white rounded-2xl border border-gray-100 shadow-2xl shadow-gray-400/20"
           >
-            {/* Header */}
+            {}
             <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <MapPin className="h-5 w-5 text-amber-500" />
@@ -87,7 +87,7 @@ export function AddressModal({ open, onClose, onSuccess }: AddressModalProps) {
               </button>
             </div>
 
-            {/* Form */}
+            {}
             <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <Input label="Full name" placeholder="Ankit Raj" error={errors.fullName?.message} {...register("fullName")} />

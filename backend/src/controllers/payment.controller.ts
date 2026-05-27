@@ -1,8 +1,3 @@
-/**
- * payment.controller.ts
- * HTTP layer for payment operations:
- *   POST /api/payments/create-order — creates a Razorpay order for a reservation
- */
 
 import { Request, Response } from "express";
 import { paymentService } from "../services/payment.service.js";

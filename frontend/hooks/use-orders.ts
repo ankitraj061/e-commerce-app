@@ -24,9 +24,9 @@ export function useCancelOrder() {
   return useMutation({
     mutationFn: (id: string) => orderService.cancel(id),
     onSuccess: (updatedOrder) => {
-      // Update the individual order cache immediately
+      
       queryClient.setQueryData([...ORDERS_KEY, updatedOrder.id], updatedOrder);
-      // Invalidate the orders list so it reflects the new status
+      
       queryClient.invalidateQueries({ queryKey: ORDERS_KEY });
     },
   });

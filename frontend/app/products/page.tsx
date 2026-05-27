@@ -50,7 +50,7 @@ function ProductCard({
       whileHover={{ y: -6 }}
       className="group relative bg-white rounded-2xl border border-gray-100 overflow-hidden hover:border-amber-400/40 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 shadow-sm"
     >
-      {/* Image */}
+      {}
       <div className="relative h-52 overflow-hidden bg-gray-50">
         <img
           src={product.image || `https://picsum.photos/seed/${product.id}/400/300`}
@@ -59,7 +59,7 @@ function ProductCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
-        {/* Stock badge */}
+        {}
         <div className="absolute top-3 left-3">
           <Badge
             variant={inStock ? (stock < 5 ? "warning" : "success") : "destructive"}
@@ -69,7 +69,7 @@ function ProductCard({
           </Badge>
         </div>
 
-        {/* Quick reserve on hover */}
+        {}
         {inStock && (
           <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
             <Link href={`/products/${product.id}`}>
@@ -81,7 +81,7 @@ function ProductCard({
         )}
       </div>
 
-      {/* Content */}
+      {}
       <div className="p-5">
         <div className="mb-1">
           <h3 className="font-semibold text-gray-900 text-base leading-tight line-clamp-1">
@@ -117,7 +117,7 @@ function ProductCard({
         </div>
       </div>
 
-      {/* Glow effect */}
+      {}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-amber-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
     </motion.div>
   );
@@ -138,14 +138,14 @@ export default function ProductsPage() {
     if (!products) return [];
     let result = [...products];
 
-    // Filter by warehouse inventory
+    
     if (selectedWarehouse) {
       result = result.filter((p) =>
         p.inventories.some((i) => i.warehouseId === selectedWarehouse.id)
       );
     }
 
-    // Search
+    
     if (filters.search) {
       const q = filters.search.toLowerCase();
       result = result.filter(
@@ -155,7 +155,7 @@ export default function ProductsPage() {
       );
     }
 
-    // Sort
+    
     result.sort((a, b) => {
       const dir = filters.sortOrder === "asc" ? 1 : -1;
       if (filters.sortBy === "name") {
@@ -177,7 +177,7 @@ export default function ProductsPage() {
 
   return (
     <PageWrapper>
-      {/* Header */}
+      {}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -223,7 +223,7 @@ export default function ProductsPage() {
         transition={{ delay: 0.1 }}
         className="mb-8 flex flex-col sm:flex-row gap-3"
       >
-        {/* Search */}
+        {}
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
           <input
@@ -235,7 +235,7 @@ export default function ProductsPage() {
           />
         </div>
 
-        {/* Sort */}
+        {}
         <div className="flex items-center gap-2">
           <div className="relative">
             <select
@@ -283,7 +283,7 @@ export default function ProductsPage() {
         </div>
       </motion.div>
 
-      {/* Product grid */}
+      {}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 8 }).map((_, i) => (

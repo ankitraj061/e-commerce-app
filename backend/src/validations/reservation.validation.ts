@@ -1,11 +1,5 @@
-/**
- * reservation.validation.ts
- * Zod schemas for reservation-related requests.
- */
 
 import { z } from "zod";
-
-// ─── Create reservation ────────────────────────────────────────────────────────
 
 export const createReservationSchema = z.object({
   productId: z.string().cuid("Invalid product ID"),
@@ -19,8 +13,6 @@ export const createReservationSchema = z.object({
 
 export type CreateReservationInput = z.infer<typeof createReservationSchema>;
 
-// ─── Confirm reservation (payment verification) ────────────────────────────────
-
 export const confirmReservationSchema = z.object({
   razorpayOrderId: z.string().min(1, "Razorpay order ID is required"),
   razorpayPaymentId: z.string().min(1, "Razorpay payment ID is required"),
@@ -28,8 +20,6 @@ export const confirmReservationSchema = z.object({
 });
 
 export type ConfirmReservationInput = z.infer<typeof confirmReservationSchema>;
-
-// ─── Route params ──────────────────────────────────────────────────────────────
 
 export const reservationParamsSchema = z.object({
   id: z.string().cuid("Invalid reservation ID"),

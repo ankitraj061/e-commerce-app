@@ -1,9 +1,3 @@
-/**
- * order.routes.ts
- *
- * GET /api/orders       — list user's orders
- * GET /api/orders/:id   — single order detail
- */
 
 import { Router } from "express";
 import { orderController } from "../controllers/order.controller.js";

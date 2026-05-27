@@ -1,12 +1,5 @@
-/**
- * auth.validation.ts
- * Zod schemas for all auth-related request bodies.
- * Export both the schema (for the validate middleware) and the inferred type.
- */
 
 import { z } from "zod";
-
-// ─── Register ──────────────────────────────────────────────────────────────────
 
 export const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -22,16 +15,12 @@ export const registerSchema = z.object({
 
 export type RegisterInput = z.infer<typeof registerSchema>;
 
-// ─── Login ─────────────────────────────────────────────────────────────────────
-
 export const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;
-
-// ─── Select warehouse (optional profile update) ────────────────────────────────
 
 export const selectWarehouseSchema = z.object({
   warehouseId: z.string().cuid("Invalid warehouse ID"),

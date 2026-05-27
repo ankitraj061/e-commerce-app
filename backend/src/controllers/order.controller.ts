@@ -1,9 +1,3 @@
-/**
- * order.controller.ts
- *
- * GET /api/orders       — list authenticated user's orders (most recent first)
- * GET /api/orders/:id   — single order with full detail (items, address, reservation)
- */
 
 import { Request, Response } from "express";
 import { orderRepository } from "../repositories/order.repository.js";

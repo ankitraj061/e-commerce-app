@@ -1,7 +1,3 @@
-/**
- * address.validation.ts
- * Zod schemas for delivery address operations.
- */
 
 import { z } from "zod";
 
@@ -20,17 +16,11 @@ const baseAddressSchema = z.object({
   isDefault: z.boolean().optional().default(false),
 });
 
-// ─── Create address ────────────────────────────────────────────────────────────
-
 export const createAddressSchema = baseAddressSchema;
 export type CreateAddressInput = z.infer<typeof createAddressSchema>;
 
-// ─── Update address (all fields optional) ─────────────────────────────────────
-
 export const updateAddressSchema = baseAddressSchema.partial();
 export type UpdateAddressInput = z.infer<typeof updateAddressSchema>;
-
-// ─── Params ───────────────────────────────────────────────────────────────────
 
 export const addressParamsSchema = z.object({
   id: z.string().cuid("Invalid address ID"),

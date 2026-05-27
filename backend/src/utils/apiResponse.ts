@@ -1,10 +1,3 @@
-/**
- * apiResponse.ts
- * Standardised JSON response envelope used across all endpoints.
- *
- * Success:  { success: true,  data: T,      message?: string }
- * Error:    { success: false, error: string, details?: unknown }
- */
 
 import { Response } from "express";
 

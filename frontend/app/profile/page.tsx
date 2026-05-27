@@ -64,7 +64,7 @@ export default function ProfilePage() {
 
   return (
     <PageWrapper maxWidth="2xl">
-      {/* Header */}
+      {}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -94,7 +94,7 @@ export default function ProfilePage() {
       </motion.div>
 
       <motion.div variants={staggerContainer} initial="hidden" animate="show" className="space-y-5">
-        {/* Account info */}
+        {}
         <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
           <p className="text-xs text-gray-400 uppercase tracking-wider mb-4">Account</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -141,7 +141,7 @@ export default function ProfilePage() {
           </div>
         </motion.div>
 
-        {/* Quick stats */}
+        {}
         <motion.div variants={fadeUp} className="grid grid-cols-3 gap-4">
           {[
             { label: "Orders", value: orders.length, icon: ShoppingBag },
@@ -155,7 +155,7 @@ export default function ProfilePage() {
           ))}
         </motion.div>
 
-        {/* Delivery Addresses */}
+        {}
         <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <p className="text-xs text-gray-400 uppercase tracking-wider">Saved Addresses</p>
@@ -214,7 +214,7 @@ export default function ProfilePage() {
           )}
         </motion.div>
 
-        {/* Recent orders */}
+        {}
         {orders.length > 0 && (
           <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
             <div className="flex items-center justify-between mb-4">
@@ -246,7 +246,7 @@ export default function ProfilePage() {
           </motion.div>
         )}
 
-        {/* Danger zone */}
+        {}
         <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-red-100 p-6 shadow-sm">
           <p className="text-xs text-red-400 uppercase tracking-wider mb-3">Sign Out</p>
           <p className="text-sm text-gray-400 mb-4">

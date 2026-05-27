@@ -1,14 +1,8 @@
-// ─────────────────────────────────────────────────────────────────────────────
-// types/index.ts — Shared TypeScript types (mirrors Prisma schema)
-// ─────────────────────────────────────────────────────────────────────────────
 
-// ── Enums ─────────────────────────────────────────────────────────────────────
 
 export type ReservationStatus = "PENDING" | "CONFIRMED" | "RELEASED" | "EXPIRED";
 export type PaymentStatus = "PENDING" | "PAID" | "FAILED" | "REFUNDED";
 export type OrderStatus = "PLACED" | "PROCESSING" | "SHIPPED" | "DELIVERED" | "CANCELLED";
-
-// ── User ──────────────────────────────────────────────────────────────────────
 
 export interface User {
   id: string;
@@ -18,8 +12,6 @@ export interface User {
   createdAt: string;
   updatedAt: string;
 }
-
-// ── Auth ──────────────────────────────────────────────────────────────────────
 
 export interface AuthTokens {
   accessToken: string;
@@ -40,8 +32,6 @@ export interface AuthResponse {
   user: User;
   accessToken: string;
 }
-
-// ── Address ───────────────────────────────────────────────────────────────────
 
 export interface Address {
   id: string;
@@ -69,8 +59,6 @@ export interface CreateAddressPayload {
   isDefault?: boolean;
 }
 
-// ── Warehouse ─────────────────────────────────────────────────────────────────
-
 export interface Warehouse {
   id: string;
   name: string;
@@ -87,14 +75,12 @@ export interface WarehouseWithInventory extends Warehouse {
   inventories: InventoryWithProduct[];
 }
 
-// ── Product ───────────────────────────────────────────────────────────────────
-
 export interface Product {
   id: string;
   name: string;
   description: string;
   image: string;
-  price: string; // Decimal serialised as string
+  price: string; 
   createdAt: string;
   updatedAt: string;
 }
@@ -102,8 +88,6 @@ export interface Product {
 export interface ProductWithInventory extends Product {
   inventories: InventoryWithWarehouse[];
 }
-
-// ── Inventory ─────────────────────────────────────────────────────────────────
 
 export interface Inventory {
   id: string;
@@ -123,11 +107,8 @@ export interface InventoryWithWarehouse extends Inventory {
   warehouse: Warehouse;
 }
 
-// Helper: available stock
 export const availableStock = (inv: Inventory): number =>
   Math.max(0, inv.totalStock - inv.reservedStock);
-
-// ── Reservation ───────────────────────────────────────────────────────────────
 
 export interface Reservation {
   id: string;
@@ -150,10 +131,6 @@ export interface ReservationWithDetails extends Reservation {
   payment?: Payment | null;
 }
 
-/**
- * Shape returned by GET /api/reservations (list endpoint).
- * Includes product, warehouse, and payment — but NOT deliveryAddress.
- */
 export interface ReservationListItem extends Reservation {
   product: Product;
   warehouse: Warehouse;
@@ -172,14 +149,11 @@ export interface ConfirmReservationPayload {
   razorpaySignature: string;
 }
 
-// ── Payment ───────────────────────────────────────────────────────────────────
-
-/** Persisted Payment record (one per reservation) */
 export interface Payment {
   id: string;
   reservationId: string;
   razorpayOrderId: string;
-  amount: string; // Decimal serialised as string
+  amount: string; 
   status: PaymentStatus;
   razorpayPaymentId: string | null;
   razorpaySignature: string | null;
@@ -198,7 +172,6 @@ export interface CreatePaymentOrderPayload {
   reservationId: string;
 }
 
-// Razorpay global types (injected via CDN script)
 export interface RazorpayOptions {
   key: string;
   amount: number;
@@ -225,8 +198,6 @@ export interface RazorpayPaymentResponse {
   razorpay_payment_id: string;
   razorpay_signature: string;
 }
-
-// ── Order ─────────────────────────────────────────────────────────────────────
 
 export interface Order {
   id: string;
@@ -257,8 +228,6 @@ export interface OrderWithDetails extends Order {
   reservation: Reservation | null;
 }
 
-// ── API Response wrappers ─────────────────────────────────────────────────────
-
 export interface ApiSuccess<T> {
   success: true;
   data: T;
@@ -272,8 +241,6 @@ export interface ApiError {
 }
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiError;
-
-// ── UI Helpers ────────────────────────────────────────────────────────────────
 
 export interface SelectOption {
   value: string;

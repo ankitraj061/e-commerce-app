@@ -1,8 +1,3 @@
-/**
- * address.repository.ts
- * DB operations for the Address model.
- * All queries are scoped to a userId — addresses are private per user.
- */
 
 import { prisma } from "../lib/prisma.js";
 import type { CreateAddressInput, UpdateAddressInput } from "../validations/address.validation.js";
@@ -20,7 +15,7 @@ export const addressRepository = {
   },
 
   async create(userId: string, data: CreateAddressInput) {
-    // If this is being set as default, unset all others first (in a transaction)
+    
     return prisma.$transaction(async (tx) => {
       if (data.isDefault) {
         await tx.address.updateMany({
@@ -34,7 +29,7 @@ export const addressRepository = {
 
   async update(id: string, userId: string, data: UpdateAddressInput) {
     return prisma.$transaction(async (tx) => {
-      // Verify ownership
+      
       const existing = await tx.address.findFirst({ where: { id, userId } });
       if (!existing) return null;
 

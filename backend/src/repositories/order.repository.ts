@@ -1,8 +1,3 @@
-/**
- * order.repository.ts
- * Read + cancel operations for Orders.
- * Order creation happens inside the confirm-reservation transaction.
- */
 
 import { prisma } from "../lib/prisma.js";
 import { ApiError } from "../utils/apiError.js";
@@ -31,21 +26,9 @@ export const orderRepository = {
     });
   },
 
-  /**
-   * Cancel an order and immediately return stock to the inventory.
-   *
-   * Stock accounting:
-   *   When a reservation is confirmed, the service does:
-   *     totalStock -= qty, reservedStock -= qty   (available unchanged)
-   *   So on cancellation we restore:
-   *     totalStock += qty   (available increases; reservedStock is already settled)
-   *
-   * Only PLACED or PROCESSING orders may be cancelled.
-   * The whole operation runs in a single transaction.
-   */
-  async cancelOrder(id: string, userId: string) {
+    async cancelOrder(id: string, userId: string) {
     return prisma.$transaction(async (tx) => {
-      // Load order with items + reservation (for warehouseId)
+      
       const order = await tx.order.findFirst({
         where: { id, userId },
         include: {
@@ -64,7 +47,7 @@ export const orderRepository = {
         );
       }
 
-      // Restore totalStock for every item in the order
+      
       const warehouseId = order.reservation?.warehouseId;
       if (warehouseId) {
         for (const item of order.items) {
@@ -79,7 +62,7 @@ export const orderRepository = {
         }
       }
 
-      // Mark the order cancelled
+      
       const updated = await tx.order.update({
         where: { id },
         data: { status: "CANCELLED" },

@@ -1,8 +1,3 @@
-/**
- * warehouse.routes.ts
- * GET /api/warehouses       — list all warehouses
- * GET /api/warehouses/:id   — single warehouse with inventory
- */
 
 import { Router } from "express";
 import { warehouseController } from "../controllers/warehouse.controller.js";

@@ -1,8 +1,3 @@
-/**
- * product.routes.ts
- * GET /api/products       — list all products with inventory
- * GET /api/products/:id   — single product with inventory
- */
 
 import { Router } from "express";
 import { productController } from "../controllers/product.controller.js";

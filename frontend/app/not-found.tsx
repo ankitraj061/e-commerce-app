@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 export default function NotFound() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-white relative overflow-hidden">
-      {/* Background blobs */}
+      {}
       <div className="absolute -top-40 -right-40 h-[400px] w-[400px] rounded-full bg-amber-400/15 blur-[120px]" />
       <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-orange-400/10 blur-[120px]" />
 
@@ -18,14 +18,14 @@ export default function NotFound() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative z-10 text-center px-6"
       >
-        {/* Logo */}
+        {}
         <div className="flex justify-center mb-8">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-xl shadow-amber-500/30">
             <Boxes className="h-7 w-7 text-white" />
           </div>
         </div>
 
-        {/* 404 */}
+        {}
         <div className="text-[10rem] font-bold leading-none gradient-text mb-2 select-none">
           404
         </div>

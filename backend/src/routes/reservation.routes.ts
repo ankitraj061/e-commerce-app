@@ -1,13 +1,3 @@
-/**
- * reservation.routes.ts
- * All reservation routes are protected (require access token).
- *
- * POST /api/reservations                    — create (idempotent)
- * GET  /api/reservations                    — list user's reservations
- * GET  /api/reservations/:id                — single reservation
- * POST /api/reservations/:id/confirm        — confirm after payment (idempotent)
- * POST /api/reservations/:id/release        — manual release
- */
 
 import { Router } from "express";
 import { reservationController } from "../controllers/reservation.controller.js";
@@ -22,7 +12,6 @@ import {
 
 const router = Router();
 
-// All reservation routes require authentication
 router.use(authMiddleware);
 
 router.post(

@@ -1,18 +1,13 @@
-/**
- * store/auth.store.ts
- * Manages authentication state, access token (in-memory), and user data.
- */
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { setAccessToken } from "@/services/api";
 import type { User } from "@/types";
 
-// Lightweight hint cookie for the proxy (middleware) to read
 function setAuthHintCookie(value: boolean) {
   if (typeof document === "undefined") return;
   if (value) {
-    // 7 days
+    
     document.cookie = `bharatbazaar-auth-hint=1; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
   } else {
     document.cookie = "bharatbazaar-auth-hint=; path=/; max-age=0; SameSite=Lax";
@@ -25,7 +20,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isHydrated: boolean;
 
-  // Actions
+  
   setAuth: (user: User, accessToken: string) => void;
   setUser: (user: User) => void;
   clearAuth: () => void;
@@ -59,7 +54,7 @@ export const useAuthStore = create<AuthState>()(
     {
       name: "bharatbazaar-auth",
       storage: createJSONStorage(() => localStorage),
-      // Only persist user and token; re-hydrate access token on mount
+      
       partialize: (state) => ({
         user: state.user,
         accessToken: state.accessToken,
@@ -67,7 +62,7 @@ export const useAuthStore = create<AuthState>()(
       }),
       onRehydrateStorage: () => (state) => {
         if (state) {
-          // Re-inject access token into axios on page load
+          
           if (state.accessToken) {
             setAccessToken(state.accessToken);
           }

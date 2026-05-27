@@ -1,7 +1,3 @@
-/**
- * payment.routes.ts
- * POST /api/payments/create-order  — create Razorpay order for a reservation
- */
 
 import { Router } from "express";
 import { paymentController } from "../controllers/payment.controller.js";

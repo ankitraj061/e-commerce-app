@@ -27,7 +27,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { fadeUpCustom as fadeUp, staggerContainer as stagger } from "@/lib/animations";
 
-// ── Animated Number Counter ───────────────────────────────────────────────────
 function AnimatedCounter({
   to,
   suffix = "",
@@ -61,7 +60,6 @@ function AnimatedCounter({
   );
 }
 
-// ── Data ──────────────────────────────────────────────────────────────────────
 const stats = [
   { to: 99, suffix: ".9%", label: "Uptime SLA", icon: TrendingUp, color: "text-emerald-500", bg: "bg-emerald-500/10" },
   { to: 50, suffix: "ms", prefix: "<", label: "Reservation Latency", icon: Zap, color: "text-amber-500", bg: "bg-amber-500/10" },
@@ -106,7 +104,6 @@ const marqueeItems = [
   "PhonePe", "Dunzo", "Licious", "SUGAR Cosmetics", "boAt", "Mamaearth",
 ];
 
-// ── Component ─────────────────────────────────────────────────────────────────
 export default function LandingPage() {
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -118,7 +115,7 @@ export default function LandingPage() {
 
   return (
     <div className="relative overflow-x-hidden bg-[#09090b]">
-      {/* ── Navbar ─────────────────────────────────────────────────────────── */}
+      {}
       <nav className="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-6 lg:px-12 h-16 bg-[#09090b]/80 backdrop-blur-md border-b border-white/[0.06]">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-lg shadow-amber-500/30">
@@ -141,12 +138,12 @@ export default function LandingPage() {
         </div>
       </nav>
 
-      {/* ── HERO ───────────────────────────────────────────────────────────── */}
+      {}
       <section
         ref={heroRef}
         className="relative flex min-h-screen items-center justify-center overflow-hidden pt-16"
       >
-        {/* Aurora background */}
+        {}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <motion.div
             style={{ y: heroY }}
@@ -157,7 +154,7 @@ export default function LandingPage() {
             className="absolute -bottom-40 -left-60 h-[600px] w-[600px] rounded-full bg-orange-600/15 blur-[120px]"
           />
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[900px] rounded-full bg-amber-400/8 blur-[100px]" />
-          {/* Dot grid */}
+          {}
           <div
             className="absolute inset-0 opacity-[0.12]"
             style={{
@@ -165,7 +162,7 @@ export default function LandingPage() {
               backgroundSize: "32px 32px",
             }}
           />
-          {/* Radial vignette */}
+          {}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_-10%,rgba(245,158,11,0.18),transparent)]" />
         </div>
 
@@ -173,7 +170,7 @@ export default function LandingPage() {
           style={{ opacity: heroOpacity }}
           className="relative z-10 mx-auto max-w-5xl px-4 text-center"
         >
-          {/* Animated badge */}
+          {}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -186,7 +183,7 @@ export default function LandingPage() {
             <ChevronRight className="h-3.5 w-3.5 opacity-60" />
           </motion.div>
 
-          {/* Heading */}
+          {}
           <motion.h1
             variants={fadeUp}
             initial="hidden"
@@ -200,7 +197,7 @@ export default function LandingPage() {
             <span className="text-gray-500">At Scale.</span>
           </motion.h1>
 
-          {/* Subtext */}
+          {}
           <motion.p
             variants={fadeUp}
             initial="hidden"
@@ -212,7 +209,7 @@ export default function LandingPage() {
             countdowns, and seamless Razorpay payments — across every warehouse you operate.
           </motion.p>
 
-          {/* CTAs */}
+          {}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -234,7 +231,7 @@ export default function LandingPage() {
             </Link>
           </motion.div>
 
-          {/* Trust indicators */}
+          {}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -250,18 +247,18 @@ export default function LandingPage() {
             ))}
           </motion.div>
 
-          {/* ── Dashboard mockup ── */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 80, scale: 0.93 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ delay: 0.65, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
             className="mt-20 relative mx-auto max-w-4xl"
           >
-            {/* Glow behind mockup */}
+            {}
             <div className="absolute -inset-8 rounded-3xl bg-amber-500/15 blur-3xl -z-10" />
 
             <div className="relative rounded-2xl bg-[#111115] border border-white/[0.08] overflow-hidden shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)]">
-              {/* Browser chrome */}
+              {}
               <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06] bg-[#0c0c10]">
                 <div className="h-3 w-3 rounded-full bg-red-500/70" />
                 <div className="h-3 w-3 rounded-full bg-amber-500/70" />
@@ -275,9 +272,9 @@ export default function LandingPage() {
                 </div>
               </div>
 
-              {/* Dashboard body */}
+              {}
               <div className="p-5 bg-[#111115]">
-                {/* Top KPI row */}
+                {}
                 <div className="grid grid-cols-3 gap-3 mb-4">
                   {[
                     { label: "Total Reservations", value: "2,847", trend: "+12%", icon: "📦" },
@@ -298,7 +295,7 @@ export default function LandingPage() {
                   ))}
                 </div>
 
-                {/* Warehouse grid */}
+                {}
                 <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] p-4">
                   <div className="flex items-center justify-between mb-3">
                     <div className="text-xs text-gray-400 font-medium flex items-center gap-2">
@@ -339,7 +336,7 @@ export default function LandingPage() {
         </motion.div>
       </section>
 
-      {/* ── MARQUEE ────────────────────────────────────────────────────────── */}
+      {}
       <div className="py-10 border-y border-white/[0.06] overflow-hidden bg-[#09090b]">
         <p className="text-center text-[11px] font-semibold tracking-[0.2em] text-gray-600 uppercase mb-5">
           Trusted by operations teams at
@@ -370,7 +367,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* ── STATS ──────────────────────────────────────────────────────────── */}
+      {}
       <section className="py-20 bg-white">
         <div className="mx-auto max-w-6xl px-6">
           <motion.div
@@ -407,7 +404,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FEATURES (Bento Grid) ───────────────────────────────────────────── */}
+      {}
       <section className="py-24 bg-gray-50/80">
         <div className="mx-auto max-w-6xl px-6">
           <motion.div
@@ -436,7 +433,7 @@ export default function LandingPage() {
             </motion.p>
           </motion.div>
 
-          {/* Bento layout */}
+          {}
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -444,7 +441,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="grid grid-cols-1 md:grid-cols-6 gap-4 auto-rows-auto"
           >
-            {/* Large card — Multi-Warehouse */}
+            {}
             <motion.div
               variants={fadeUp}
               whileHover={{ y: -4 }}
@@ -499,7 +496,7 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            {/* Countdown card */}
+            {}
             <motion.div
               variants={fadeUp}
               whileHover={{ y: -4 }}
@@ -524,7 +521,7 @@ export default function LandingPage() {
               </div>
             </motion.div>
 
-            {/* Bottom row: 3 equal cards */}
+            {}
             {[
               {
                 icon: Zap,
@@ -567,7 +564,7 @@ export default function LandingPage() {
               </motion.div>
             ))}
 
-            {/* Analytics wide card */}
+            {}
             <motion.div
               variants={fadeUp}
               whileHover={{ y: -4 }}
@@ -609,14 +606,14 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ───────────────────────────────────────────────────── */}
+      {}
       <section className="py-24 bg-[#09090b] relative overflow-hidden">
-        {/* Decorative lines */}
+        {}
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent" />
         <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/20 to-transparent" />
-        {/* Central glow */}
+        {}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[700px] rounded-full bg-amber-500/8 blur-[100px] pointer-events-none" />
-        {/* Dot grid */}
+        {}
         <div
           className="absolute inset-0 opacity-[0.06] pointer-events-none"
           style={{
@@ -648,7 +645,7 @@ export default function LandingPage() {
             </motion.p>
           </motion.div>
 
-          {/* Timeline */}
+          {}
           <motion.div
             variants={stagger}
             initial="hidden"
@@ -663,15 +660,15 @@ export default function LandingPage() {
                 custom={i}
                 className="relative flex gap-5 mb-8 last:mb-0 group"
               >
-                {/* Vertical connector */}
+                {}
                 {i < steps.length - 1 && (
                   <div className="absolute left-5.5 top-12 bottom-[-2rem] w-px bg-gradient-to-b from-amber-500/40 via-amber-500/20 to-transparent" />
                 )}
-                {/* Step circle */}
+                {}
                 <div className="relative z-10 flex-shrink-0 flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-500/10 border border-amber-500/30 group-hover:bg-amber-500/20 group-hover:border-amber-500/50 transition-all duration-300">
                   <span className="text-xs font-bold gradient-text">{item.step}</span>
                 </div>
-                {/* Content */}
+                {}
                 <div className="flex-1 pt-2">
                   <h3 className="text-base font-semibold text-white mb-1">{item.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
@@ -682,7 +679,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ───────────────────────────────────────────────────── */}
+      {}
       <section className="py-24 bg-white">
         <div className="mx-auto max-w-6xl px-6">
           <motion.div
@@ -714,7 +711,7 @@ export default function LandingPage() {
                   whileHover={{ y: -6 }}
                   className="relative bg-white rounded-2xl border border-gray-100 p-6 hover:border-amber-200 hover:shadow-2xl hover:shadow-amber-500/8 transition-all duration-300 shadow-sm overflow-hidden group"
                 >
-                  {/* Top gradient accent bar */}
+                  {}
                   <div className={`absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r ${t.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
 
                   <div className="flex gap-0.5 mb-4">
@@ -743,13 +740,13 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── CTA ────────────────────────────────────────────────────────────── */}
+      {}
       <section className="py-28 relative overflow-hidden bg-[#09090b]">
-        {/* Glows */}
+        {}
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-amber-400/30 to-transparent" />
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 h-[500px] w-[700px] rounded-full bg-amber-500/20 blur-[120px] pointer-events-none" />
         <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 h-[300px] w-[500px] rounded-full bg-orange-600/10 blur-[100px] pointer-events-none" />
-        {/* Grid */}
+        {}
         <div
           className="absolute inset-0 opacity-[0.05] pointer-events-none"
           style={{
@@ -807,7 +804,7 @@ export default function LandingPage() {
               </Link>
             </motion.div>
 
-            {/* Trust badges */}
+            {}
             <motion.div
               variants={fadeUp}
               className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-600"
@@ -828,7 +825,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── FOOTER ─────────────────────────────────────────────────────────── */}
+      {}
       <footer className="border-t border-white/[0.06] py-10 bg-[#09090b]">
         <div className="mx-auto max-w-6xl px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">

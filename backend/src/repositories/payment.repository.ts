@@ -1,13 +1,9 @@
-/**
- * payment.repository.ts
- * Database operations for the Payment model.
- */
 
 import { prisma } from "../lib/prisma.js";
 import type { Payment } from "@prisma/client";
 
 export const paymentRepository = {
-  // ── Create ──────────────────────────────────────────────────────────────────
+  
 
   async create(data: {
     reservationId: string;
@@ -24,7 +20,7 @@ export const paymentRepository = {
     });
   },
 
-  // ── Read ────────────────────────────────────────────────────────────────────
+  
 
   async findByReservationId(reservationId: string): Promise<Payment | null> {
     return prisma.payment.findUnique({ where: { reservationId } });

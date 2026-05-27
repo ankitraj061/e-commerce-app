@@ -26,8 +26,6 @@ import { useCountdown } from "@/hooks/use-countdown";
 import { cn } from "@/lib/utils";
 import type { ReservationListItem, PaymentStatus, ReservationStatus } from "@/types";
 
-// ── Payment status config ────────────────────────────────────────────────────
-
 const paymentStatusConfig: Record<
   PaymentStatus,
   { label: string; variant: "success" | "warning" | "destructive" | "secondary"; icon: React.ElementType }
@@ -48,8 +46,6 @@ const reservationStatusConfig: Record<
   EXPIRED: { label: "Expired", variant: "secondary" },
 };
 
-// ── Individual reservation card ──────────────────────────────────────────────
-
 function ReservationCard({ reservation, index }: { reservation: ReservationListItem; index: number }) {
   const router = useRouter();
   const isExpired = new Date(reservation.expiresAt) <= new Date();
@@ -64,7 +60,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
   const paymentCfg = paymentStatusConfig[payStatus];
   const resCfg = reservationStatusConfig[reservation.status];
 
-  // Determine payment history message
+  
   function getPaymentHistoryMessage(): string {
     if (isConfirmed) return "Payment completed successfully.";
     if (reservation.payment?.status === "PAID") return "Payment recorded.";
@@ -89,16 +85,16 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
           : "border-gray-100"
       )}
     >
-      {/* Active: attention bar */}
+      {}
       {isActive && (
         <div className="h-1 w-full bg-gradient-to-r from-amber-400 to-orange-400" />
       )}
 
       <div className="p-5">
-        {/* Header row */}
+        {}
         <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
           <div className="flex items-start gap-3">
-            {/* Product image */}
+            {}
             <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl bg-gray-50 border border-gray-100">
               <img
                 src={
@@ -126,7 +122,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
             </div>
           </div>
 
-          {/* Amount */}
+          {}
           <div className="text-right flex-shrink-0">
             <p className="text-lg font-bold gradient-text">{formatPrice(totalAmount)}</p>
             <p className="text-xs text-gray-400 mt-0.5">
@@ -135,7 +131,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
           </div>
         </div>
 
-        {/* Payment history message */}
+        {}
         <div
           className={cn(
             "flex items-start gap-2.5 rounded-xl px-4 py-3 text-sm mb-4",
@@ -156,7 +152,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
           <span>{getPaymentHistoryMessage()}</span>
         </div>
 
-        {/* Timeline row */}
+        {}
         <div className="flex items-center justify-between text-xs text-gray-400 mb-4">
           <span>
             Created: <span className="text-gray-600">{formatDateTime(reservation.createdAt)}</span>
@@ -182,7 +178,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
           )}
         </div>
 
-        {/* Payment record detail */}
+        {}
         {reservation.payment && (
           <div className="border-t border-gray-100 pt-3 mb-4">
             <p className="text-xs text-gray-400 uppercase tracking-wide mb-2">Payment Record</p>
@@ -220,7 +216,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
           </div>
         )}
 
-        {/* CTA */}
+        {}
         <div className="flex gap-2">
           {isActive && (
             <Button
@@ -258,7 +254,7 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
             </Button>
           )}
 
-          {/* Always show detail link */}
+          {}
           <Button
             size="sm"
             variant="ghost"
@@ -271,8 +267,6 @@ function ReservationCard({ reservation, index }: { reservation: ReservationListI
     </motion.div>
   );
 }
-
-// ── Skeleton ─────────────────────────────────────────────────────────────────
 
 function ReservationSkeleton() {
   return (
@@ -292,8 +286,6 @@ function ReservationSkeleton() {
   );
 }
 
-// ── Page ─────────────────────────────────────────────────────────────────────
-
 export default function ReservationsPage() {
   const { data: reservations = [], isLoading, error } = useReservations();
 
@@ -306,7 +298,7 @@ export default function ReservationsPage() {
 
   return (
     <PageWrapper maxWidth="2xl">
-      {/* Header */}
+      {}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -352,7 +344,7 @@ export default function ReservationsPage() {
         />
       ) : (
         <div className="space-y-8">
-          {/* Active / Pending section */}
+          {}
           {active.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-4">
@@ -374,7 +366,7 @@ export default function ReservationsPage() {
             </section>
           )}
 
-          {/* History section */}
+          {}
           {history.length > 0 && (
             <section>
               <div className="flex items-center gap-2 mb-4">

@@ -1,12 +1,3 @@
-/**
- * auth.routes.ts
- * POST /api/auth/register
- * POST /api/auth/login
- * POST /api/auth/refresh-token   (uses HttpOnly cookie)
- * POST /api/auth/logout          (uses HttpOnly cookie)
- * POST /api/auth/logout-all      (protected — revoke all sessions)
- * GET  /api/auth/me              (protected — current user info)
- */
 
 import { Router } from "express";
 import { authController } from "../controllers/auth.controller.js";
@@ -36,7 +27,6 @@ router.post("/refresh-token", asyncWrapper(authController.refreshToken));
 
 router.post("/logout", asyncWrapper(authController.logout));
 
-// Protected routes
 router.post(
   "/logout-all",
   authMiddleware,

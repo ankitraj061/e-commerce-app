@@ -4,8 +4,6 @@ import { forwardRef, type HTMLAttributes } from "react";
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
-// ── Static card ───────────────────────────────────────────────────────────────
-
 const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
@@ -19,8 +17,6 @@ const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   )
 );
 Card.displayName = "Card";
-
-// ── Animated card (uses motion.div) ───────────────────────────────────────────
 
 type MotionCardProps = HTMLMotionProps<"div"> & {
   glowOnHover?: boolean;
@@ -40,8 +36,6 @@ const MotionCard = forwardRef<HTMLDivElement, MotionCardProps>(
   )
 );
 MotionCard.displayName = "MotionCard";
-
-// ── Card sub-components ───────────────────────────────────────────────────────
 
 const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (

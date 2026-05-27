@@ -23,7 +23,6 @@ import { EmptyState } from "@/components/ui/empty-state";
 import type { Warehouse as WarehouseType } from "@/types";
 import { cn } from "@/lib/utils";
 
-// Warehouse images fallback by city
 const warehouseImages: Record<string, string> = {
   Delhi: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=800&q=80",
   Mumbai: "https://images.unsplash.com/photo-1580674285054-bed31e145f59?w=800&q=80",
@@ -62,7 +61,7 @@ export default function WarehousesPage() {
 
   const handleSelect = async (warehouse: WarehouseType) => {
     if (selectingId) return;
-    if (selectedWarehouse?.id === warehouse.id) return; // already selected
+    if (selectedWarehouse?.id === warehouse.id) return; 
     setSelectingId(warehouse.id);
     try {
       await warehouseService.selectWarehouse(warehouse.id);
@@ -79,7 +78,7 @@ export default function WarehousesPage() {
 
   return (
     <PageWrapper>
-      {/* Header */}
+      {}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -104,7 +103,7 @@ export default function WarehousesPage() {
         )}
       </motion.div>
 
-      {/* Grid */}
+      {}
       {isLoading ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Array.from({ length: 6 }).map((_, i) => (
@@ -155,19 +154,19 @@ export default function WarehousesPage() {
                     : "border-gray-100 hover:border-amber-300 hover:shadow-xl hover:shadow-amber-500/10"
                 )}
               >
-                {/* Selected ring */}
+                {}
                 {isSelected && (
                   <div className="absolute inset-0 rounded-2xl border-2 border-amber-400 pointer-events-none z-10" />
                 )}
 
-                {/* Selected badge */}
+                {}
                 {isSelected && (
                   <div className="absolute top-3 right-3 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 shadow-lg">
                     <CheckCircle2 className="h-4 w-4 text-white" />
                   </div>
                 )}
 
-                {/* Image */}
+                {}
                 <div className="relative h-44 overflow-hidden">
                   <img
                     src={imgSrc}
@@ -175,7 +174,7 @@ export default function WarehousesPage() {
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  {/* Delivery badge */}
+                  {}
                   <div className="absolute bottom-3 left-3">
                     <span className="inline-flex items-center gap-1 rounded-lg bg-black/60 backdrop-blur-sm border border-white/10 px-2.5 py-1 text-xs text-white">
                       🚚 {delivery} delivery
@@ -183,7 +182,7 @@ export default function WarehousesPage() {
                   </div>
                 </div>
 
-                {/* Content */}
+                {}
                 <div className="p-5">
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -225,7 +224,7 @@ export default function WarehousesPage() {
                   </Button>
                 </div>
 
-                {/* Hover glow */}
+                {}
                 <div className="absolute inset-0 rounded-2xl bg-amber-500/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               </motion.div>
             );

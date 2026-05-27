@@ -4,14 +4,10 @@ import { secondsUntil } from "@/lib/utils";
 interface CountdownState {
   seconds: number;
   isExpired: boolean;
-  isWarning: boolean; // < 5 min
-  isDanger: boolean;  // < 2 min
+  isWarning: boolean; 
+  isDanger: boolean;  
 }
 
-/**
- * Live countdown to a given expiry date string.
- * Ticks every second using requestAnimationFrame for smoothness.
- */
 export function useCountdown(expiresAt: string | undefined): CountdownState {
   const [seconds, setSeconds] = useState(() =>
     expiresAt ? secondsUntil(expiresAt) : 0
@@ -28,7 +24,7 @@ export function useCountdown(expiresAt: string | undefined): CountdownState {
         lastTickRef.current = now;
         const remaining = secondsUntil(expiresAt);
         setSeconds(remaining);
-        if (remaining <= 0) return; // Stop
+        if (remaining <= 0) return; 
       }
       rafRef.current = requestAnimationFrame(tick);
     };
@@ -42,7 +38,7 @@ export function useCountdown(expiresAt: string | undefined): CountdownState {
   return {
     seconds,
     isExpired: seconds <= 0,
-    isWarning: seconds > 0 && seconds <= 300,  // 5 min
-    isDanger: seconds > 0 && seconds <= 120,   // 2 min
+    isWarning: seconds > 0 && seconds <= 300,  
+    isDanger: seconds > 0 && seconds <= 120,   
   };
 }

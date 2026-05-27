@@ -1,11 +1,3 @@
-/**
- * services/api.ts
- * Axios instance with:
- *  - Base URL from env
- *  - Access token injection via request interceptor
- *  - Automatic refresh token retry on 401
- *  - Clean error normalisation
- */
 
 import axios, {
   type AxiosError,
@@ -13,16 +5,12 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from "axios";
 
-// ── Base instance ─────────────────────────────────────────────────────────────
-
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000/api",
-  withCredentials: true, // HttpOnly cookies (refresh token)
+  withCredentials: true, 
   timeout: 12_000,
   headers: { "Content-Type": "application/json" },
 });
-
-// ── Token store (in-memory, populated by auth store) ─────────────────────────
 
 let _accessToken: string | null = null;
 let _isRefreshing = false;
@@ -47,8 +35,6 @@ function processQueue(error: unknown, token: string | null = null) {
   _failedQueue = [];
 }
 
-// ── Request interceptor — inject access token ─────────────────────────────────
-
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     if (_accessToken && config.headers) {
@@ -59,22 +45,19 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ── Helper — clear auth hint from client storage / cookie ───────────────────
 function clearAuthHint() {
   if (typeof window === "undefined") return;
 
-  // Clear the lightweight auth hint cookie used by the proxy.
+  
   document.cookie = "bharatbazaar-auth-hint=; path=/; max-age=0; SameSite=Lax";
 
-  // Clear persisted auth state from Zustand storage, so refresh does not restore stale auth.
+  
   try {
     window.localStorage.removeItem("bharatbazaar-auth");
   } catch {
-    // Ignore storage errors.
+    
   }
 }
-
-// ── Response interceptor — refresh token on 401 ───────────────────────────────
 
 api.interceptors.response.use(
   (response) => response,
@@ -83,7 +66,7 @@ api.interceptors.response.use(
       _retry?: boolean;
     };
 
-    // Skip refresh for auth endpoints themselves
+    
     const isAuthEndpoint =
       originalRequest.url?.includes("/auth/login") ||
       originalRequest.url?.includes("/auth/register") ||
@@ -92,7 +75,7 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       if (_isRefreshing) {
-        // Queue the request until refresh completes
+        
         return new Promise((resolve, reject) => {
           _failedQueue.push({ resolve, reject });
         }).then((token) => {
@@ -122,7 +105,7 @@ api.interceptors.response.use(
         processQueue(refreshError, null);
         setAccessToken(null);
         clearAuthHint();
-        // Redirect to login
+        
         if (typeof window !== "undefined") {
           window.location.href = "/auth/login";
         }
@@ -135,8 +118,6 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-// ── Error helper ──────────────────────────────────────────────────────────────
 
 export function extractErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {

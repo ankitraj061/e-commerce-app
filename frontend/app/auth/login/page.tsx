@@ -52,13 +52,13 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen bg-white">
-      {/* ── Left panel — branding ───────────────────────────────────────────── */}
+      {}
       <div className="relative hidden lg:flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 overflow-hidden border-r border-amber-100">
-        {/* Background blobs */}
+        {}
         <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-amber-400/20 blur-[100px] animate-float-glow" />
         <div className="absolute -bottom-40 -right-40 h-[400px] w-[400px] rounded-full bg-orange-400/15 blur-[100px] animate-float-glow" style={{ animationDelay: "3s" }} />
 
-        {/* Floating icons */}
+        {}
         {floatingIcons.map(({ icon: Icon, x, y, delay }) => (
           <motion.div
             key={`${x}-${y}`}
@@ -71,7 +71,7 @@ export default function LoginPage() {
           </motion.div>
         ))}
 
-        {/* Subtle grid pattern */}
+        {}
         <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.5) 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
 
         <div className="relative z-10 max-w-sm text-center px-8">
@@ -103,9 +103,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* ── Right panel — form ──────────────────────────────────────────────── */}
+      {}
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 relative bg-white">
-        {/* Mobile logo */}
+        {}
         <div className="lg:hidden mb-8 flex flex-col items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500">
             <Boxes className="h-5 w-5 text-white" />
@@ -170,14 +170,14 @@ export default function LoginPage() {
             </motion.div>
           </form>
 
-          {/* Divider */}
+          {}
           <motion.div variants={fadeUp} custom={5} className="my-6 flex items-center gap-4">
             <div className="h-px flex-1 bg-gray-100" />
             <span className="text-xs text-gray-400">OR CONTINUE WITH</span>
             <div className="h-px flex-1 bg-gray-100" />
           </motion.div>
 
-          {/* Demo credentials hint */}
+          {}
           <motion.div variants={fadeUp} custom={6} className="bg-amber-50 border border-amber-100 rounded-xl p-4 text-center">
             <p className="text-xs text-gray-400 mb-1">Demo credentials</p>
             <p className="text-xs text-gray-600">

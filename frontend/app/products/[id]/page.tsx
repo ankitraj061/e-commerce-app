@@ -55,7 +55,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   const selectedAddressId = watch("deliveryAddressId");
 
-  // Auto-select default (or first) address when addresses load
+  
   useEffect(() => {
     if (addresses.length > 0 && !selectedAddressId) {
       const defaultAddr = addresses.find((a) => a.isDefault) ?? addresses[0];
@@ -131,7 +131,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
 
   return (
     <PageWrapper maxWidth="7xl">
-      {/* Back */}
+      {}
       <motion.button
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
@@ -142,7 +142,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
       </motion.button>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        {/* Image */}
+        {}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -156,7 +156,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-            {/* Stock overlay */}
+            {}
             {!inStock && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
                 <Badge variant="destructive" className="text-base px-4 py-2">
@@ -165,11 +165,11 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
               </div>
             )}
           </div>
-          {/* Glow behind image */}
+          {}
           <div className="absolute -inset-4 rounded-3xl bg-amber-500/10 blur-3xl -z-10" />
         </motion.div>
 
-        {/* Details & form */}
+        {}
         <motion.div
           variants={fadeUp}
           initial="hidden"
@@ -177,7 +177,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
           custom={1}
           className="flex flex-col gap-6"
         >
-          {/* Title & badges */}
+          {}
           <div>
             <div className="flex flex-wrap gap-2 mb-3">
               <Badge variant={inStock ? "success" : "destructive"} dot>
@@ -197,7 +197,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             <p className="text-gray-500 leading-relaxed">{product.description}</p>
           </div>
 
-          {/* Warehouse inventory breakdown */}
+          {}
           {product.inventories.length > 0 && (
             <div className="bg-white rounded-xl border border-gray-100 p-4 shadow-sm">
               <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">
@@ -225,7 +225,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             </div>
           )}
 
-          {/* Order info banner */}
+          {}
           <div className="flex items-center gap-3 rounded-xl bg-amber-50 border border-amber-100 px-4 py-3">
             <Clock className="h-5 w-5 text-amber-500 flex-shrink-0" />
             <p className="text-sm text-amber-800">
@@ -234,10 +234,10 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
             </p>
           </div>
 
-          {/* Reserve form */}
+          {}
           {inStock && (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-              {/* Quantity */}
+              {}
               <div>
                 <label className="text-sm font-medium text-gray-700 mb-2 block">
                   Quantity
@@ -268,7 +268,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
                 </div>
               </div>
 
-              {/* Delivery address */}
+              {}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-sm font-medium text-gray-700">Delivery Address</label>
@@ -358,7 +358,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
         </motion.div>
       </div>
 
-      {/* Address modal */}
+      {}
       <AddressModal
         open={showAddressModal}
         onClose={() => setShowAddressModal(false)}

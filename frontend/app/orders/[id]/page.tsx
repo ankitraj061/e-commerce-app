@@ -90,7 +90,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
 
   return (
     <PageWrapper maxWidth="2xl">
-      {/* Confirmation dialog — no browser alert() */}
+      {}
       <ConfirmDialog
         open={showCancelDialog}
         title="Cancel this order?"
@@ -103,7 +103,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
         onCancel={() => setShowCancelDialog(false)}
       />
 
-      {/* Back */}
+      {}
       <motion.button
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
@@ -113,7 +113,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
         <ArrowLeft className="h-4 w-4" /> Back to Orders
       </motion.button>
 
-      {/* Header */}
+      {}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -142,14 +142,14 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
         animate="show"
         className="space-y-5"
       >
-        {/* Timeline */}
+        {}
         {order.status !== "CANCELLED" && (
           <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
             <p className="text-xs text-gray-400 uppercase tracking-wider mb-5">Order Progress</p>
             <div className="relative flex items-start justify-between">
-              {/* connector line background */}
+              {}
               <div className="absolute top-5 left-5 right-5 h-0.5 bg-gray-100" />
-              {/* connector line progress */}
+              {}
               <div
                 className="absolute top-5 left-5 h-0.5 bg-gradient-to-r from-amber-400 to-orange-400 transition-all duration-700"
                 style={{
@@ -189,7 +189,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
           </motion.div>
         )}
 
-        {/* Status card */}
+        {}
         <motion.div
           variants={fadeUp}
           className={cn("bg-white rounded-2xl border p-5 flex items-center gap-4 shadow-sm", cfg.border)}
@@ -213,7 +213,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
           </div>
         </motion.div>
 
-        {/* Order items */}
+        {}
         {order.items && order.items.length > 0 && (
           <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <p className="text-xs text-gray-400 uppercase tracking-wider mb-4">Items Ordered</p>
@@ -242,9 +242,9 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
           </motion.div>
         )}
 
-        {/* Delivery + Payment info side by side */}
+        {}
         <motion.div variants={fadeUp} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Delivery Address */}
+          {}
           {order.deliveryAddress && (
             <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <div className="flex items-center gap-2 mb-3">
@@ -260,7 +260,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
             </div>
           )}
 
-          {/* Payment info */}
+          {}
           <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
             <div className="flex items-center gap-2 mb-3">
               <CreditCard className="h-4 w-4 text-amber-500" />
@@ -289,7 +289,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
           </div>
         </motion.div>
 
-        {/* Order total */}
+        {}
         <motion.div variants={fadeUp} className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
           <div className="space-y-3 text-sm">
             <div className="flex justify-between text-gray-500">
@@ -311,7 +311,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
           </div>
         </motion.div>
 
-        {/* Actions */}
+        {}
         <motion.div variants={fadeUp} className="flex flex-wrap gap-3 pt-2">
           <Button variant="outline" onClick={() => router.push("/orders")} leftIcon={<ArrowLeft className="h-4 w-4" />}>
             All Orders
@@ -320,7 +320,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
             <a href="/products">Browse Products</a>
           </Button>
 
-          {/* Cancel — only for PLACED / PROCESSING */}
+          {}
           {canCancel && (
             <Button
               variant="outline"

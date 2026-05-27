@@ -20,8 +20,7 @@ export const reservationService = {
     return data.data.reservation;
   },
 
-  /** Returns all reservations for the current user, including payment info. */
-  async list(): Promise<ReservationListItem[]> {
+    async list(): Promise<ReservationListItem[]> {
     const { data } = await api.get<{ data: { reservations: ReservationListItem[] } }>("/reservations");
     return data.data.reservations;
   },

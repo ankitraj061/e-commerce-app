@@ -1,12 +1,3 @@
-/**
- * reservation.controller.ts
- * HTTP layer for reservation lifecycle:
- *   POST   /api/reservations              — create (concurrency-safe)
- *   GET    /api/reservations              — list user's reservations
- *   GET    /api/reservations/:id          — single reservation detail
- *   POST   /api/reservations/:id/confirm  — confirm after payment
- *   POST   /api/reservations/:id/release  — manually release
- */
 
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma.js";
@@ -18,12 +9,12 @@ import { ApiError } from "../utils/apiError.js";
 import { getParam } from "../utils/getParam.js";
 
 export const reservationController = {
-  // ─── Create ──────────────────────────────────────────────────────────────
+  
 
   async create(req: Request, res: Response): Promise<void> {
     const userId = req.user!.userId;
 
-    // Warehouse comes from the authenticated user's profile
+    
     const user = await prisma.user.findUnique({ where: { id: userId } });
 
     if (!user?.selectedWarehouseId) {
@@ -42,7 +33,7 @@ export const reservationController = {
     sendSuccess(res, { reservation }, "Reservation created successfully.", 201);
   },
 
-  // ─── List ─────────────────────────────────────────────────────────────────
+  
 
   async list(req: Request, res: Response): Promise<void> {
     const reservations = await reservationRepository.findByUserId(
@@ -51,7 +42,7 @@ export const reservationController = {
     sendSuccess(res, { reservations });
   },
 
-  // ─── Get by ID ────────────────────────────────────────────────────────────
+  
 
   async getById(req: Request, res: Response): Promise<void> {
     const reservation = await reservationRepository.findByIdWithDetails(
@@ -64,12 +55,12 @@ export const reservationController = {
     sendSuccess(res, { reservation });
   },
 
-  // ─── Confirm (after payment) ──────────────────────────────────────────────
+  
 
   async confirm(req: Request, res: Response): Promise<void> {
     const { razorpayOrderId, razorpayPaymentId, razorpaySignature } = req.body;
 
-    // Verify Razorpay signature BEFORE touching the DB
+    
     const isValid = paymentService.verifyPaymentSignature({
       razorpayOrderId,
       razorpayPaymentId,
@@ -89,7 +80,7 @@ export const reservationController = {
     sendSuccess(res, { order }, "Reservation confirmed. Order placed.", 201);
   },
 
-  // ─── Release ──────────────────────────────────────────────────────────────
+  
 
   async release(req: Request, res: Response): Promise<void> {
     await reservationService.releaseReservation(

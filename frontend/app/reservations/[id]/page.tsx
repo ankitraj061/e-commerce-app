@@ -33,8 +33,6 @@ declare global {
   }
 }
 
-// Module-level singleton — prevents duplicate <script> tags if called
-// concurrently (e.g. while still loading, or after a component remount).
 let _razorpayScriptPromise: Promise<void> | null = null;
 
 function loadRazorpayScript(): Promise<void> {
@@ -47,7 +45,7 @@ function loadRazorpayScript(): Promise<void> {
     script.async = true;
     script.onload = () => resolve();
     script.onerror = (err) => {
-      _razorpayScriptPromise = null; // Allow retry after a network error
+      _razorpayScriptPromise = null; 
       reject(err);
     };
     document.head.appendChild(script);
@@ -68,12 +66,12 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
   const { data: reservation, isLoading, error, refetch } = useQuery({
     queryKey: ["reservation", id],
     queryFn: () => reservationService.getById(id),
-    refetchInterval: 30_000, // refresh every 30s to sync status
+    refetchInterval: 30_000, 
   });
 
   const { seconds, isExpired } = useCountdown(reservation?.expiresAt);
 
-  // Expire handling — UI countdown/badge already shows the expired state; no toast needed
+  
 
   const handlePay = async () => {
     if (!reservation) return;
@@ -107,8 +105,8 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
             toast.success("🎉 Payment successful! Order confirmed.");
             router.push("/orders?success=true");
           } catch (err) {
-            // Razorpay modal has already closed here — reset loading so the
-            // Pay button becomes clickable again for a retry.
+            
+            
             setPaymentLoading(false);
             toast.error(extractErrorMessage(err));
             refetch();
@@ -135,7 +133,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
       toast.error(extractErrorMessage(err));
       setPaymentLoading(false);
     } finally {
-      // Don't reset loading — the payment modal handles it via ondismiss
+      
     }
   };
 
@@ -198,12 +196,12 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
         onCancel={() => setShowCancelDialog(false)}
       />
 
-      {/* Back */}
+      {}
       <motion.button
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         onClick={() => {
-          // If reservation is still active, remind user they can return
+          
           if (isActive) {
             toast("Order saved — complete payment anytime before expiry.", {
               description: "Find it under Payments in the nav.",
@@ -221,7 +219,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
         <ArrowLeft className="h-4 w-4" /> Back
       </motion.button>
 
-      {/* Confirmed banner */}
+      {}
       <AnimatePresence>
         {isConfirmed && (
           <motion.div
@@ -256,9 +254,9 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
       </p>
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        {/* ── Left: countdown + details ─────────────────────────────────────── */}
+        {}
         <div className="lg:col-span-3 space-y-5">
-          {/* Countdown */}
+          {}
           {!isConfirmed && (
             <motion.div
               variants={fadeUp}
@@ -284,7 +282,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
             </motion.div>
           )}
 
-          {/* Product summary */}
+          {}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -312,7 +310,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
             </div>
           </motion.div>
 
-          {/* Warehouse & Address */}
+          {}
           <motion.div
             variants={fadeUp}
             initial="hidden"
@@ -320,7 +318,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
             custom={3}
             className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           >
-            {/* Warehouse */}
+            {}
             <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <Warehouse className="h-4 w-4 text-amber-500" />
@@ -333,7 +331,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
               <p className="text-xs text-gray-400 mt-0.5">{reservation.warehouse.pincode}</p>
             </div>
 
-            {/* Delivery address */}
+            {}
             <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm">
               <div className="flex items-center gap-2 mb-3">
                 <MapPin className="h-4 w-4 text-amber-500" />
@@ -347,7 +345,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
           </motion.div>
         </div>
 
-        {/* ── Right: order summary + payment ───────────────────────────────── */}
+        {}
         <div className="lg:col-span-2">
           <motion.div
             variants={fadeUp}
@@ -361,7 +359,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
               Order Summary
             </h2>
 
-            {/* Line items */}
+            {}
             <div className="divide-y divide-gray-50 text-sm mb-5">
               <div className="flex justify-between text-gray-500 py-2.5">
                 <span className="truncate pr-4">{reservation.product.name} × {reservation.quantity}</span>
@@ -384,7 +382,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
               </div>
             </div>
 
-            {/* Status badge */}
+            {}
             <div className="flex justify-between items-center text-sm mb-5 pb-5 border-b border-gray-100">
               <span className="text-gray-400">Status</span>
               <Badge
@@ -405,7 +403,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
               </Badge>
             </div>
 
-            {/* Actions */}
+            {}
             {isActive && (
               <div className="space-y-3">
                 <Button
@@ -446,7 +444,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
               </Button>
             )}
 
-            {/* Trust badges */}
+            {}
             <div className="mt-5 pt-4 border-t border-gray-100">
               <div className="flex items-center justify-center gap-3 text-xs text-gray-400 flex-wrap">
                 <span className="flex items-center gap-1">

@@ -1,8 +1,3 @@
-/**
- * product.controller.ts
- * Handles GET /api/products and GET /api/products/:id
- * Returns products with per-warehouse inventory including available stock.
- */
 
 import { Request, Response } from "express";
 import { inventoryRepository } from "../repositories/inventory.repository.js";

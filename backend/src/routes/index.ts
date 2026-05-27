@@ -1,8 +1,3 @@
-/**
- * routes/index.ts
- * Central route registry — imported once in src/index.ts.
- * Adding a new feature = add one line here.
- */
 
 import { Router } from "express";
 import authRoutes from "./auth.routes.js";
@@ -25,7 +20,7 @@ router.use("/addresses", addressRoutes);
 router.use("/reservations", reservationRoutes);
 router.use("/payments", paymentRoutes);
 router.use("/orders", orderRoutes);
-// Internal — called by Google Cloud Scheduler (protected by X-Cron-Secret header)
+
 router.use("/internal/cron", cronRoutes);
 
 export default router;

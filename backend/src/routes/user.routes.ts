@@ -1,12 +1,3 @@
-/**
- * user.routes.ts
- * All routes are protected — require a valid access token.
- *
- * GET    /api/users/me              — full profile (name, email, selected warehouse)
- * PATCH  /api/users/me              — update name
- * PATCH  /api/users/me/warehouse    — set selected warehouse (reservation prerequisite)
- * DELETE /api/users/me/warehouse    — clear warehouse selection
- */
 
 import { Router } from "express";
 import { userController } from "../controllers/user.controller.js";

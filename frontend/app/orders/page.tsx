@@ -38,7 +38,7 @@ function OrderCard({ order, index }: { order: Order; index: number }) {
       whileHover={{ y: -2 }}
       className="group bg-white rounded-2xl border border-gray-100 hover:border-amber-300 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 overflow-hidden shadow-sm"
     >
-      {/* Progress bar */}
+      {}
       {order.status !== "CANCELLED" && (
         <div className="px-5 pt-5 pb-0">
           <div className="flex items-center gap-0">
@@ -86,7 +86,7 @@ function OrderCard({ order, index }: { order: Order; index: number }) {
       )}
 
       <div className="p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        {/* Order icon */}
+        {}
         <div className={cn(
           "flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl",
           order.status === "DELIVERED" ? "bg-emerald-50 border border-emerald-100" :
@@ -100,7 +100,7 @@ function OrderCard({ order, index }: { order: Order; index: number }) {
           )} />
         </div>
 
-        {/* Info */}
+        {}
         <div className="flex-1 min-w-0">
           <div className="flex flex-wrap items-center gap-2 mb-1">
             <span className="text-sm font-semibold text-gray-900">
@@ -119,7 +119,7 @@ function OrderCard({ order, index }: { order: Order; index: number }) {
           </p>
         </div>
 
-        {/* Amount & CTA */}
+        {}
         <div className="flex flex-col sm:items-end gap-2">
           <span className="text-lg font-bold gradient-text">{formatPrice(order.totalAmount)}</span>
           <Link href={`/orders/${order.id}`}>
@@ -133,7 +133,6 @@ function OrderCard({ order, index }: { order: Order; index: number }) {
   );
 }
 
-/** Inner component that can safely call useSearchParams (wrapped in Suspense below) */
 function OrdersContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -148,7 +147,7 @@ function OrdersContent() {
 
   return (
     <PageWrapper>
-      {/* Header */}
+      {}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -164,7 +163,7 @@ function OrdersContent() {
         </p>
       </motion.div>
 
-      {/* Success banner */}
+      {}
       <AnimatePresence>
         {searchParams.get("success") === "true" && (
           <motion.div
@@ -184,7 +183,7 @@ function OrdersContent() {
         )}
       </AnimatePresence>
 
-      {/* Pending payment banner */}
+      {}
       <AnimatePresence>
         {pendingReservations.length > 0 && (
           <motion.div
@@ -245,7 +244,7 @@ function OrdersContent() {
         )}
       </AnimatePresence>
 
-      {/* List */}
+      {}
       {isLoading ? (
         <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, i) => <OrderRowSkeleton key={i} />)}

@@ -15,7 +15,7 @@ interface CountdownTimerProps {
 export function CountdownTimer({ expiresAt, totalSeconds = 900, className }: CountdownTimerProps) {
   const { seconds, isExpired, isWarning, isDanger } = useCountdown(expiresAt);
   const progress = Math.max(0, seconds / totalSeconds);
-  const circumference = 2 * Math.PI * 54; // r=54
+  const circumference = 2 * Math.PI * 54; 
   const strokeDashoffset = circumference * (1 - progress);
 
   const ringColor = isExpired
@@ -36,9 +36,9 @@ export function CountdownTimer({ expiresAt, totalSeconds = 900, className }: Cou
 
   return (
     <div className={cn("flex flex-col items-center gap-4", className)}>
-      {/* Circular progress ring */}
+      {}
       <div className="relative">
-        {/* Outer glow */}
+        {}
         <motion.div
           animate={{ boxShadow: `0 0 40px ${glowColor}` }}
           transition={{ duration: 0.5 }}
@@ -46,7 +46,7 @@ export function CountdownTimer({ expiresAt, totalSeconds = 900, className }: Cou
         />
 
         <svg width="128" height="128" className="-rotate-90">
-          {/* Background ring */}
+          {}
           <circle
             cx="64"
             cy="64"
@@ -55,7 +55,7 @@ export function CountdownTimer({ expiresAt, totalSeconds = 900, className }: Cou
             stroke="rgba(0,0,0,0.08)"
             strokeWidth="8"
           />
-          {/* Progress ring */}
+          {}
           <motion.circle
             cx="64"
             cy="64"
@@ -71,7 +71,7 @@ export function CountdownTimer({ expiresAt, totalSeconds = 900, className }: Cou
           />
         </svg>
 
-        {/* Center content */}
+        {}
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <AnimatePresence mode="wait">
             {isExpired ? (
@@ -109,7 +109,7 @@ export function CountdownTimer({ expiresAt, totalSeconds = 900, className }: Cou
         </div>
       </div>
 
-      {/* Status text */}
+      {}
       <AnimatePresence mode="wait">
         {isExpired ? (
           <motion.div

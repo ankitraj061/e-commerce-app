@@ -1,7 +1,3 @@
-/**
- * warehouse.controller.ts
- * Handles GET /api/warehouses
- */
 
 import { Request, Response } from "express";
 import { prisma } from "../lib/prisma.js";

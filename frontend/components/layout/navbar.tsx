@@ -41,11 +41,11 @@ export function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
 
-  // Don't show navbar on auth pages or landing
+  
   const isAuthPage = pathname.startsWith("/auth");
   const isLanding = pathname === "/";
 
-  // Pending payment indicator — only fetch when authenticated
+  
   const { active: pendingReservations } = useActivePendingReservations({ enabled: isAuthenticated });
   const hasPendingPayment = isAuthenticated && pendingReservations.length > 0;
 
@@ -71,7 +71,7 @@ export function Navbar() {
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
+          {}
           <Link href={isAuthenticated ? "/warehouses" : "/"} className="flex items-center gap-2.5">
             <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500">
               <Boxes className="h-4.5 w-4.5 text-white" />
@@ -79,7 +79,7 @@ export function Navbar() {
             <span className="text-lg font-bold gradient-text">Bharat Bazaar</span>
           </Link>
 
-          {/* Desktop nav */}
+          {}
           {isAuthenticated && (
             <div className="hidden md:flex items-center gap-1">
               {navLinks.map(({ href, label, icon: Icon }) => {
@@ -119,11 +119,11 @@ export function Navbar() {
             </div>
           )}
 
-          {/* Right side */}
+          {}
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
               <>
-                {/* Warehouse indicator */}
+                {}
                 {selectedWarehouse && (
                   <Link href="/warehouses">
                     <Badge variant="secondary" className="hidden sm:flex items-center gap-1.5 cursor-pointer hover:border-amber-500/30 transition-colors">
@@ -133,7 +133,7 @@ export function Navbar() {
                   </Link>
                 )}
 
-                {/* Profile dropdown */}
+                {}
                 <div className="relative">
                   <button
                     onClick={() => setProfileOpen(!profileOpen)}
@@ -179,7 +179,7 @@ export function Navbar() {
                   </AnimatePresence>
                 </div>
 
-                {/* Mobile menu toggle */}
+                {}
                 <button
                   className="md:hidden rounded-xl p-2 text-gray-500 hover:text-gray-900 hover:bg-amber-50 transition-colors"
                   onClick={() => setMenuOpen(!menuOpen)}
@@ -203,7 +203,7 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {}
       <AnimatePresence>
         {menuOpen && isAuthenticated && (
           <motion.div

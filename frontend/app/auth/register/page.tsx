@@ -82,9 +82,9 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen bg-white">
-      {/* ── Left panel — form ───────────────────────────────────────────────── */}
+      {}
       <div className="flex flex-1 flex-col items-center justify-center px-6 py-12 bg-white">
-        {/* Mobile logo */}
+        {}
         <div className="lg:hidden mb-8 flex flex-col items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500">
             <Boxes className="h-5 w-5 text-white" />
@@ -135,7 +135,7 @@ export default function RegisterPage() {
                 error={errors.password?.message}
                 {...register("password")}
               />
-              {/* Strength bar */}
+              {}
               {password.length > 0 && (
                 <div className="mt-2 space-y-1">
                   <div className="flex gap-1">
@@ -190,7 +190,7 @@ export default function RegisterPage() {
         </motion.div>
       </div>
 
-      {/* ── Right panel — perks ─────────────────────────────────────────────── */}
+      {}
       <div className="relative hidden lg:flex flex-1 flex-col items-center justify-center bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 overflow-hidden border-l border-amber-100">
         <div className="absolute -top-40 -right-40 h-[500px] w-[500px] rounded-full bg-amber-400/20 blur-[100px] animate-float-glow" />
         <div className="absolute -bottom-40 -left-40 h-[400px] w-[400px] rounded-full bg-orange-400/15 blur-[100px] animate-float-glow" style={{ animationDelay: "4s" }} />
@@ -228,7 +228,7 @@ export default function RegisterPage() {
             ))}
           </div>
 
-          {/* Testimonial card */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

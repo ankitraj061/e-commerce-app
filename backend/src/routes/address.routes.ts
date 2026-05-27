@@ -1,14 +1,3 @@
-/**
- * address.routes.ts
- * All routes require authentication.
- *
- * GET    /api/addresses              — list user's delivery addresses
- * POST   /api/addresses              — create a new address
- * GET    /api/addresses/:id          — fetch a single address
- * PATCH  /api/addresses/:id          — update address fields (partial)
- * DELETE /api/addresses/:id          — delete an address
- * PATCH  /api/addresses/:id/default  — mark address as default
- */
 
 import { Router } from "express";
 import { addressController } from "../controllers/address.controller.js";

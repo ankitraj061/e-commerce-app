@@ -4,7 +4,7 @@ function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>)
   return (
     <div
       className={cn(
-        // bg-gray-100 is the base colour — shimmer adds a white sweep ON TOP without overriding it
+        
         "rounded-xl bg-gray-100 shimmer",
         className
       )}
@@ -13,7 +13,6 @@ function Skeleton({ className, ...props }: React.HTMLAttributes<HTMLDivElement>)
   );
 }
 
-// Product card skeleton
 function ProductCardSkeleton() {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
@@ -31,7 +30,6 @@ function ProductCardSkeleton() {
   );
 }
 
-// Warehouse card skeleton
 function WarehouseCardSkeleton() {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
@@ -48,7 +46,6 @@ function WarehouseCardSkeleton() {
   );
 }
 
-// Order row skeleton
 function OrderRowSkeleton() {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-5 flex gap-4 items-center shadow-sm">

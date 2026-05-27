@@ -1,25 +1,3 @@
-/**
- * prisma.ts
- * Singleton Prisma Client for Prisma 7.
- *
- * Prisma 7 removed `url = env(...)` from schema.prisma.
- * The connection is provided via the `@prisma/adapter-pg` driver adapter,
- * which wraps the existing pg.Pool with the DATABASE_URL from the environment.
- *
- * In development, we attach the instance to `globalThis` so tsx watch
- * hot-reloads don't open dozens of parallel connections.
- *
- * ── Neon cold-start resilience ──────────────────────────────────────────────
- * Neon serverless computes auto-suspend after ~5 min of inactivity. The first
- * connection attempt after suspension often fails with ETIMEDOUT (< 1 s) while
- * the compute is waking up. We handle this with:
- *   1. keepAlive: true  – TCP keep-alives prevent mid-query drops once warm.
- *   2. idleTimeoutMillis: 60_000 – keep pool connections alive for 60 s of
- *      inactivity, reducing how often we need to reconnect to a cold compute.
- *   3. connectWithRetry() – exported helper used at startup to ping the DB
- *      with up to 5 retries / 2 s backoff before serving traffic or running
- *      background jobs.
- */
 
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -36,10 +14,10 @@ const globalForPrisma = globalThis as unknown as {
 function createPool(): Pool {
   const dbUrl = process.env.DATABASE_URL!;
 
-  // pg-connection-string's `sslmode=require` is now treated as `verify-full`,
-  // which conflicts with how we want to set up SSL (rejectUnauthorized: false).
-  // Parsing the URL manually and passing explicit options to pg.Pool avoids
-  // the connection-string SSL parameter confusion entirely.
+  
+  
+  
+  
   const url = new URL(dbUrl);
 
   return new Pool({
@@ -84,16 +62,6 @@ if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }
 
-/**
- * connectWithRetry
- *
- * Pings the database and retries on ETIMEDOUT / ECONNRESET.
- * Call once at server startup (before starting background jobs or accepting
- * traffic) to absorb the Neon cold-start window.
- *
- * @param maxAttempts  Number of attempts before giving up (default 5).
- * @param delayMs      Initial delay between retries in ms (doubles each time).
- */
 export async function connectWithRetry(
   maxAttempts = 5,
   delayMs = 2_000
@@ -115,7 +83,7 @@ export async function connectWithRetry(
         throw err;
       }
 
-      const wait = delayMs * attempt; // 2 s, 4 s, 6 s, 8 s …
+      const wait = delayMs * attempt; 
       console.warn(
         `[db] Connection attempt ${attempt}/${maxAttempts} failed (${code}). ` +
           `Retrying in ${wait / 1000}s… (Neon compute may be waking up)`

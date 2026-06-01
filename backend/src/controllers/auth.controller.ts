@@ -14,9 +14,6 @@ function refreshCookieOptions() {
   const isProduction = env.NODE_ENV === "production";
   return {
     httpOnly: true,
-    
-    
-    
     secure: isProduction,
     sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
     maxAge: REFRESH_TOKEN_MAX_AGE_MS,

@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const createReservationSchema = z.object({
   productId: z.string().cuid("Invalid product ID"),
+  warehouseId: z.string().cuid("Invalid warehouse ID"),
   quantity: z
     .number()
     .int("Quantity must be a whole number")

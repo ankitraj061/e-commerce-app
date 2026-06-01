@@ -139,6 +139,7 @@ export interface ReservationListItem extends Reservation {
 
 export interface CreateReservationPayload {
   productId: string;
+  warehouseId: string;
   quantity: number;
   deliveryAddressId: string;
 }

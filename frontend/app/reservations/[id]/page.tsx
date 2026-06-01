@@ -7,9 +7,10 @@ import { toast } from "sonner";
 import {
   Package2, MapPin, Warehouse, CreditCard, X, CheckCircle2, ArrowLeft, Loader2, ShieldCheck,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { reservationService } from "@/services/reservation.service";
 import { useReleaseReservation } from "@/hooks/use-reservations";
+import { PRODUCTS_KEY } from "@/hooks/use-products";
 import { paymentService } from "@/services/payment.service";
 import { useAuthStore } from "@/store/auth.store";
 import { useReservationStore } from "@/store/reservation.store";
@@ -57,6 +58,7 @@ function loadRazorpayScript(): Promise<void> {
 export default function ReservationPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const { setActiveReservation } = useReservationStore();
   const [paymentLoading, setPaymentLoading] = useState(false);
@@ -102,6 +104,7 @@ export default function ReservationPage({ params }: { params: Promise<{ id: stri
               idempotencyKey
             );
             setActiveReservation(null);
+            queryClient.invalidateQueries({ queryKey: PRODUCTS_KEY });
             toast.success("🎉 Payment successful! Order confirmed.");
             router.push("/orders?success=true");
           } catch (err) {

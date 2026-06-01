@@ -10,13 +10,14 @@ import { toast } from "sonner";
 import {
   Package2, MapPin, Warehouse, Clock, ArrowLeft, Minus, Plus, Zap, ShoppingBag,
 } from "lucide-react";
-import { useProduct } from "@/hooks/use-products";
+import { useProduct, PRODUCTS_KEY } from "@/hooks/use-products";
 import { useAddresses } from "@/hooks/use-addresses";
 import { useAuthStore } from "@/store/auth.store";
 import { useWarehouseStore } from "@/store/warehouse.store";
 import { useReservationStore } from "@/store/reservation.store";
 import { reservationService } from "@/services/reservation.service";
 import { extractErrorMessage } from "@/services/api";
+import { useQueryClient } from "@tanstack/react-query";
 import { availableStock, formatPrice } from "@/lib/utils";
 import { PageWrapper, fadeUp } from "@/components/layout/page-wrapper";
 import { Button } from "@/components/ui/button";
@@ -34,6 +35,7 @@ type FormData = z.infer<typeof schema>;
 export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { user } = useAuthStore();
   const { selectedWarehouse } = useWarehouseStore();
   const { setActiveReservation } = useReservationStore();
@@ -63,8 +65,7 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
     }
   }, [addresses, selectedAddressId, setValue]);
 
-  const inv = product?.inventories.find((i) => i.warehouseId === selectedWarehouse?.id)
-    ?? product?.inventories[0];
+  const inv = product?.inventories.find((i) => i.warehouseId === selectedWarehouse?.id);
   const stock = inv ? availableStock(inv) : 0;
   const maxQty = Math.min(stock, 10);
 
@@ -75,23 +76,24 @@ export default function ProductDetailPage({ params }: { params: Promise<{ id: st
   };
 
   const onSubmit = async (data: FormData) => {
-    if (!user?.selectedWarehouseId) {
+    if (!selectedWarehouse) {
       toast.error("Please select a warehouse first");
       router.push("/warehouses");
       return;
     }
     try {
-      const idempotencyKey = `reserve-${user.id}-${id}-${Date.now()}`;
+      const idempotencyKey = `reserve-${user!.id}-${id}-${Date.now()}`;
       const reservation = await reservationService.create(
-        { productId: id, quantity: data.quantity, deliveryAddressId: data.deliveryAddressId },
+        { productId: id, warehouseId: selectedWarehouse.id, quantity: data.quantity, deliveryAddressId: data.deliveryAddressId },
         idempotencyKey
       );
       setActiveReservation(reservation);
+      queryClient.invalidateQueries({ queryKey: PRODUCTS_KEY });
       toast.success("Order placed! Complete payment before the timer runs out.");
       router.push(`/reservations/${reservation.id}`);
     } catch (err: unknown) {
       const msg = extractErrorMessage(err);
-      if (msg.toLowerCase().includes("stock") || (err as { response?: { status?: number } })?.response?.status === 409) {
+      if ((err as { response?: { status?: number } })?.response?.status === 409) {
         toast.error("Stock unavailable — another customer reserved it just now.");
       } else {
         toast.error(msg);

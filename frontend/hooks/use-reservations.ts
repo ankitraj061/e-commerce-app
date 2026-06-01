@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { reservationService } from "@/services/reservation.service";
+import { PRODUCTS_KEY } from "@/hooks/use-products";
 import type { ReservationListItem } from "@/types";
 
 export const RESERVATIONS_KEY = ["reservations"] as const;
@@ -19,9 +20,8 @@ export function useReleaseReservation() {
   return useMutation({
     mutationFn: (id: string) => reservationService.release(id),
     onSuccess: () => {
-      
-      
       queryClient.invalidateQueries({ queryKey: RESERVATIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: PRODUCTS_KEY });
     },
   });
 }

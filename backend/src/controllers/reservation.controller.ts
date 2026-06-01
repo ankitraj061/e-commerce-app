@@ -1,6 +1,5 @@
 
 import { Request, Response } from "express";
-import { prisma } from "../lib/prisma.js";
 import { reservationService } from "../services/reservation.service.js";
 import { paymentService } from "../services/payment.service.js";
 import { reservationRepository } from "../repositories/reservation.repository.js";
@@ -13,20 +12,11 @@ export const reservationController = {
 
   async create(req: Request, res: Response): Promise<void> {
     const userId = req.user!.userId;
-
-    
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-
-    if (!user?.selectedWarehouseId) {
-      throw new ApiError(
-        400,
-        "No warehouse selected. Please select a warehouse before reserving."
-      );
-    }
+    const { warehouseId } = req.body as { warehouseId: string };
 
     const reservation = await reservationService.createReservation(
       userId,
-      user.selectedWarehouseId,
+      warehouseId,
       req.body
     );
 

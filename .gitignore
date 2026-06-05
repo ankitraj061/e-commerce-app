@@ -34,3 +34,6 @@ pnpm-debug.log*
 # Local Claude config / caches
 .claude/
 
+# Interview prep (local only)
+QA.md
+
